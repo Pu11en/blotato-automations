@@ -51,6 +51,8 @@ The paid-tool restriction, reference-media rules, and mandatory workflow/output 
 
 The current evidence for exact assets, image references, consistent characters, Brand Kit behavior, and required live tests is in [`research/blotato-reference-media.md`](research/blotato-reference-media.md).
 
+The evidence-ranked public output gallery, generation-versus-publishing distinctions, and quality verdict are in [`research/public-blotato-output-examples.md`](research/public-blotato-output-examples.md).
+
 ## First three experiments
 
 1. **Evidence-backed carousel** — turn a useful source into a concise tutorial carousel.
