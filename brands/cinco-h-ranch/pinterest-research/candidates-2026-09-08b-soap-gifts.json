@@ -1,0 +1,24 @@
+[
+  {
+    "schema_version": 1,
+    "id": "cand-after-the-harvest-gift-pin-v1",
+    "product_id": "after-the-harvest",
+    "keyword": "soap gifts",
+    "signal_ids": ["editorial-soap-gifts-commercial-intent-2026-09-08"],
+    "reference_ids": [
+      "4595360573379512448",
+      "1101833865133427383",
+      "4610560194449946496",
+      "193865958951492239",
+      "211174979153601"
+    ],
+    "rationale": "Live reference-Pin collection (29 pins across 3 queries, 2026-09-08) shows generic 'tallow soap'/'handmade soap' search is dominated by DIY recipe/tutorial content, not finished-product buyers. The 'soap gifts' query instead surfaces real commercial-intent competitor listings -- most directly, hearthropic's 'Tallow Soap Gift Set' with a bamboo rack and bag. That is a near-exact positioning match for the real After the Harvest bar: reframe it as a gift-worthy, small-batch homestead item rather than competing in the recipe-saturated 'tallow soap' search. Combined with the standing video-format evidence (short vertical muted-first captioned video beats static), this points to the same production approach, retargeted with gift-forward copy and keyword.",
+    "scores": {
+      "product_fit": { "value": 2, "reason": "The physical bar is unchanged; only positioning/copy shifts toward gifting, which real reference pins show has commercial intent." },
+      "shopping_intent": { "value": 2, "reason": "Reference pins for this exact query are product/gift listings, not DIY tutorials -- direct evidence of buyer (not hobbyist) intent." },
+      "demand_evidence": { "value": 0, "reason": "placeholder; overwritten by rank() because no measured (non-editorial) demand signal exists for this keyword" },
+      "visual_opportunity": { "value": 2, "reason": "Real embossed star emblem and homestead styling stand out against competitor pins that lean generic/DIY; gift framing is a clear differentiator." },
+      "asset_readiness": { "value": 1, "reason": "Same single real, rights-owned product photo as before; no dedicated gift-set/bundle photography exists yet." }
+    }
+  }
+]

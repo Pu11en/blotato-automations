@@ -1,0 +1,27 @@
+[
+  {
+    "availability": "available",
+    "growth": {
+      "mom": null,
+      "wow": null,
+      "yoy": null
+    },
+    "id": "editorial-soap-gifts-commercial-intent-2026-09-08",
+    "metric_definition": "Live reference-Pin observation (see reference_ids on this candidate): generic 'tallow soap'/'handmade soap' search on Pinterest is dominated by DIY recipe/tutorial pins (how to make it yourself), not finished-product listings. The 'soap gifts' query surfaces genuine commercial/gift-set framing instead -- e.g. a directly comparable competitor 'Tallow Soap Gift Set' (bamboo rack + bag), a bath/body gift set, and a soap-packaging-inspiration pin. Combined with the earlier editorial finding that video pins under 30s get ~6.2x the CTR and ~4.8x the save rate of static pins, and that ~85% of viewers watch muted. Not a numeric demand series for this keyword.",
+    "mode": "manual",
+    "normalization": "not_applicable",
+    "observation_period": {
+      "end": "2026-09-08",
+      "start": "2026-09-08"
+    },
+    "query": "soap gifts",
+    "region": "US",
+    "retrieved_at": "2026-09-08T18:35:00+00:00",
+    "schema_version": 1,
+    "snapshot_hash": "dd4aa2e71bd4cbe7cdf4b0e45d5266138f6a6a51fd0aa6dc38974a6162e7949f",
+    "source_type": "editorial",
+    "source_url": "https://www.pinterest.com/pin/4595360573379512448/",
+    "time_series": {},
+    "unit": "editorial_only"
+  }
+]
