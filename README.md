@@ -43,6 +43,8 @@ Start with a **human-approved content lab**, not a fully autonomous content fact
 
 This is small enough to diagnose. Once one format wins consistently, move its approved workflow into `workflows/` and increase automation gradually.
 
+The complete proposed infrastructure, channel-isolation rules, module interfaces, experiment design, and delivery phases are in [`docs/infrastructure-plan.md`](docs/infrastructure-plan.md).
+
 ## First three experiments
 
 1. **Evidence-backed carousel** — turn a useful source into a concise tutorial carousel.
@@ -87,4 +89,3 @@ Create each experiment from [`templates/experiment.md`](templates/experiment.md)
 - Put explicit approval before publishing and before expensive generation calls.
 - Cap retries and polling loops; Blotato creation operations are asynchronous.
 - Log request IDs and terminal status so failed jobs are observable and not accidentally duplicated.
-
