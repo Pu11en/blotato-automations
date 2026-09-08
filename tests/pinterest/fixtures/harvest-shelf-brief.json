@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "candidate_id": "harvest-shelf",
+  "version": 1,
+  "audience": "Shoppers choosing a simple guest-bath finishing touch",
+  "keyword": "handmade soap",
+  "hook": "One small detail for the guest sink",
+  "script": "Introduce the product as an idea for the guest sink. Use the original product photo for a slow crop and finish on the shop link. No cleaning or skin-effect promises.",
+  "static_layout": "Original bar on a warm neutral background with generous negative space. A small contextual sink inset must be an owned photograph; do not fabricate product placement.",
+  "shots": [
+    {
+      "start": 0,
+      "end": 3,
+      "visual": "Use exact original product photo; frame the flecked surface with a restrained crop.",
+      "overlay": "One small detail for the guest sink",
+      "asset_ids": [
+        "harvest-original"
+      ]
+    },
+    {
+      "start": 3,
+      "end": 8,
+      "visual": "Slowly reveal the complete original bar. Preserve shape and star embossing; no synthetic product motion.",
+      "overlay": "After the Harvest",
+      "asset_ids": [
+        "harvest-original"
+      ]
+    },
+    {
+      "start": 8,
+      "end": 12,
+      "visual": "Hold the real product image with a small brand credit and clear CTA.",
+      "overlay": "See the current bar",
+      "asset_ids": [
+        "harvest-original"
+      ]
+    }
+  ],
+  "asset_ids": [
+    "harvest-original"
+  ],
+  "claim_ids": [
+    "harvest-name",
+    "harvest-flecks"
+  ],
+  "cta": "See the current bar",
+  "audio": {
+    "choice": "ambient",
+    "direction": "Use a quiet, owned recording of the real product being placed on a surface. No added fake production sounds; request recording before render.",
+    "rights_evidence": null
+  },
+  "duration_seconds": 12
+}

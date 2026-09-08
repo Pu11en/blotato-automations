@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "candidate_id": "harvest-gift",
+  "version": 1,
+  "audience": "Shoppers looking for a modest handmade gift",
+  "keyword": "soap gifts",
+  "hook": "A small gift with its own pattern",
+  "script": "Show the bar as a gift idea, then its natural batch variation. End on the exact product name and a link to see the current bar.",
+  "static_layout": "Product photo centered with simple gift-note typography. No packaging shown unless the actual packaging is supplied. Avoid invented ribbons, bundles or included accessories.",
+  "shots": [
+    {
+      "start": 0,
+      "end": 3,
+      "visual": "Use exact original product photo; frame the flecked surface with a restrained crop.",
+      "overlay": "A small gift with its own pattern",
+      "asset_ids": [
+        "harvest-original"
+      ]
+    },
+    {
+      "start": 3,
+      "end": 8,
+      "visual": "Slowly reveal the complete original bar. Preserve shape and star embossing; no synthetic product motion.",
+      "overlay": "After the Harvest",
+      "asset_ids": [
+        "harvest-original"
+      ]
+    },
+    {
+      "start": 8,
+      "end": 12,
+      "visual": "Hold the real product image with a small brand credit and clear CTA.",
+      "overlay": "See the current bar",
+      "asset_ids": [
+        "harvest-original"
+      ]
+    }
+  ],
+  "asset_ids": [
+    "harvest-original"
+  ],
+  "claim_ids": [
+    "harvest-name",
+    "harvest-flecks"
+  ],
+  "cta": "See the current bar",
+  "audio": {
+    "choice": "ambient",
+    "direction": "Use a quiet, owned recording of the real product being placed on a surface. No added fake production sounds; request recording before render.",
+    "rights_evidence": null
+  },
+  "duration_seconds": 12
+}

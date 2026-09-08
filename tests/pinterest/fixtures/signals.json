@@ -1,0 +1,86 @@
+[
+  {
+    "schema_version": 1,
+    "id": "fixture-trend-1",
+    "source_url": "https://trends.pinterest.com/",
+    "source_type": "pinterest_trends",
+    "retrieved_at": "2026-09-08T00:00:00+00:00",
+    "mode": "fixture",
+    "region": "US",
+    "query": "tallow soap",
+    "observation_period": {
+      "start": "2026-08-24",
+      "end": "2026-08-31"
+    },
+    "metric_definition": "SYNTHETIC TEST DATA, not observed demand",
+    "unit": "normalized_index_0_100",
+    "normalization": "per_keyword",
+    "time_series": {
+      "2026-08-24": 40,
+      "2026-08-31": 60
+    },
+    "growth": {
+      "wow": 50,
+      "mom": null,
+      "yoy": null
+    },
+    "availability": "available",
+    "snapshot_hash": "e7f83a8916eccdebacb0ec25721b29f528b195ae89bec826866fd1a7ccd0f07e"
+  },
+  {
+    "schema_version": 1,
+    "id": "fixture-trend-2",
+    "source_url": "https://trends.pinterest.com/",
+    "source_type": "pinterest_trends",
+    "retrieved_at": "2026-09-08T00:00:00+00:00",
+    "mode": "fixture",
+    "region": "US",
+    "query": "handmade soap",
+    "observation_period": {
+      "start": "2026-08-24",
+      "end": "2026-08-31"
+    },
+    "metric_definition": "SYNTHETIC TEST DATA, not observed demand",
+    "unit": "normalized_index_0_100",
+    "normalization": "per_keyword",
+    "time_series": {
+      "2026-08-24": 40,
+      "2026-08-31": 60
+    },
+    "growth": {
+      "wow": 50,
+      "mom": null,
+      "yoy": null
+    },
+    "availability": "available",
+    "snapshot_hash": "d09a20cf6bab3c96452bb2f829286464c8b540eec44831f8e5d9f37926360d1b"
+  },
+  {
+    "schema_version": 1,
+    "id": "fixture-trend-3",
+    "source_url": "https://trends.pinterest.com/",
+    "source_type": "pinterest_trends",
+    "retrieved_at": "2026-09-08T00:00:00+00:00",
+    "mode": "fixture",
+    "region": "US",
+    "query": "soap gifts",
+    "observation_period": {
+      "start": "2026-08-24",
+      "end": "2026-08-31"
+    },
+    "metric_definition": "SYNTHETIC TEST DATA, not observed demand",
+    "unit": "normalized_index_0_100",
+    "normalization": "per_keyword",
+    "time_series": {
+      "2026-08-24": 40,
+      "2026-08-31": 60
+    },
+    "growth": {
+      "wow": 50,
+      "mom": null,
+      "yoy": null
+    },
+    "availability": "available",
+    "snapshot_hash": "a2f89e5ebc23aab64be8335aabd8318172c386a7361068b430ff6b6191818540"
+  }
+]

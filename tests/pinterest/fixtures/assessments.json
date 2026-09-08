@@ -1,0 +1,107 @@
+[
+  {
+    "schema_version": 1,
+    "id": "harvest-flecks",
+    "product_id": "after-the-harvest",
+    "keyword": "tallow soap",
+    "signal_ids": [
+      "fixture-trend-1"
+    ],
+    "reference_ids": [
+      "900000000000000001"
+    ],
+    "rationale": "Open on the real flecked bar. Move from detail to the complete product, then show the product name and a quiet shopping invitation.",
+    "scores": {
+      "product_fit": {
+        "value": 2,
+        "reason": "Actual soap product fits the search intent."
+      },
+      "shopping_intent": {
+        "value": 2,
+        "reason": "Product or gift selection is the intended use; this is a hypothesis."
+      },
+      "demand_evidence": {
+        "value": 2,
+        "reason": "Synthetic fixture evidence only."
+      },
+      "visual_opportunity": {
+        "value": 2,
+        "reason": "Distinct close-up, contextual or gifting direction."
+      },
+      "asset_readiness": {
+        "value": 0,
+        "reason": "Original asset and rights approval still required."
+      }
+    }
+  },
+  {
+    "schema_version": 1,
+    "id": "harvest-shelf",
+    "product_id": "after-the-harvest",
+    "keyword": "handmade soap",
+    "signal_ids": [
+      "fixture-trend-2"
+    ],
+    "reference_ids": [
+      "900000000000000002"
+    ],
+    "rationale": "Introduce the product as an idea for the guest sink. Use the original product photo for a slow crop and finish on the shop link. No cleaning or skin-effect promises.",
+    "scores": {
+      "product_fit": {
+        "value": 2,
+        "reason": "Actual soap product fits the search intent."
+      },
+      "shopping_intent": {
+        "value": 2,
+        "reason": "Product or gift selection is the intended use; this is a hypothesis."
+      },
+      "demand_evidence": {
+        "value": 2,
+        "reason": "Synthetic fixture evidence only."
+      },
+      "visual_opportunity": {
+        "value": 2,
+        "reason": "Distinct close-up, contextual or gifting direction."
+      },
+      "asset_readiness": {
+        "value": 0,
+        "reason": "Original asset and rights approval still required."
+      }
+    }
+  },
+  {
+    "schema_version": 1,
+    "id": "harvest-gift",
+    "product_id": "after-the-harvest",
+    "keyword": "soap gifts",
+    "signal_ids": [
+      "fixture-trend-3"
+    ],
+    "reference_ids": [
+      "900000000000000003"
+    ],
+    "rationale": "Show the bar as a gift idea, then its natural batch variation. End on the exact product name and a link to see the current bar.",
+    "scores": {
+      "product_fit": {
+        "value": 2,
+        "reason": "Actual soap product fits the search intent."
+      },
+      "shopping_intent": {
+        "value": 2,
+        "reason": "Product or gift selection is the intended use; this is a hypothesis."
+      },
+      "demand_evidence": {
+        "value": 2,
+        "reason": "Synthetic fixture evidence only."
+      },
+      "visual_opportunity": {
+        "value": 2,
+        "reason": "Distinct close-up, contextual or gifting direction."
+      },
+      "asset_readiness": {
+        "value": 0,
+        "reason": "Original asset and rights approval still required."
+      }
+    }
+  }
+]

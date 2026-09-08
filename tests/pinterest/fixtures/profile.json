@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "brand": "fixture-cinco",
+  "region": "US",
+  "allowed_hosts": [
+    "www.cincohranchnaturals.com"
+  ],
+  "queries": [
+    "tallow soap",
+    "handmade soap",
+    "soap gifts"
+  ],
+  "products": [
+    {
+      "id": "after-the-harvest",
+      "name": "After the Harvest Tallow Soap Bar",
+      "url": "https://www.cincohranchnaturals.com/product-page/after-the-harvest-tallow-soap-bar",
+      "verified_at": "2026-09-08T00:00:00+00:00",
+      "claim_ids": [
+        "harvest-name",
+        "harvest-flecks"
+      ],
+      "asset_ids": [
+        "harvest-original"
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "id": "harvest-original",
+      "path": null,
+      "sha256": null,
+      "source_url": "https://static.wixstatic.com/media/32290d_0af384bde2034236b858a26d026133a1~mv2.png",
+      "rights": "reference_only",
+      "rights_evidence": null,
+      "approved": false
+    }
+  ],
+  "claims": [
+    {
+      "id": "harvest-name",
+      "text": "After the Harvest Tallow Soap Bar",
+      "source_url": "https://www.cincohranchnaturals.com/product-page/after-the-harvest-tallow-soap-bar",
+      "approved": false
+    },
+    {
+      "id": "harvest-flecks",
+      "text": "Made with soap scraps; colors and flecks vary between batches.",
+      "source_url": "https://www.cincohranchnaturals.com/product-page/after-the-harvest-tallow-soap-bar",
+      "approved": false
+    }
+  ],
+  "accounts": {
+    "pinterest": "fixture-pinterest",
+    "website": "fixture-website",
+    "costs": "fixture-costs"
+  },
+  "attribution": {
+    "model": "utm_last_click",
+    "window": "30d"
+  },
+  "timezone": "America/Chicago"
+}

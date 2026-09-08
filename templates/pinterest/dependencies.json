@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "revisions": {
+    "python": "3.10+",
+    "jsonschema": "4.22.0",
+    "opencli": "1.8.8",
+    "opencli_source": "8271afc67e8504bda94c147f446ee29775d08274",
+    "pinterest_openapi": "51aca009f10a90283ccdf3956d509fc995ebac23",
+    "certifi": "2026.7.22"
+  },
+  "dependencies": [
+    {
+      "name": "jsonschema",
+      "license": "MIT",
+      "role": "local JSON validation",
+      "paid": false,
+      "hosts": []
+    },
+    {
+      "name": "OpenCLI",
+      "license": "Apache-2.0",
+      "optional": true,
+      "role": "read-only reference collection",
+      "hosts": [
+        "www.pinterest.com",
+        "127.0.0.1"
+      ],
+      "auth": "Browser bridge required; do not import cookies into run files",
+      "installation": "Optional local pinned install with lifecycle scripts disabled; no global install or automatic adapter updates",
+      "limits": "5 queries/run; 10 Pins/query; 45-second timeout; at most 2 rate-limit retries",
+      "paid": false
+    },
+    {
+      "name": "Pinterest Trends API",
+      "license": "Service terms; API description MIT",
+      "hosts": [
+        "api.pinterest.com"
+      ],
+      "auth": "PINTEREST_ACCESS_TOKEN, user_accounts:read; entitlement unverified",
+      "limits": "10 results/query; 5 queries/run; 20-second timeout; 2 transient retries; honor Retry-After up to 30 seconds then stop",
+      "terms": "https://developers.pinterest.com/terms/",
+      "fallback": "manual source-attributed JSON/CSV import",
+      "paid": false
+    },
+    {
+      "name": "destination-check",
+      "hosts": [
+        "www.cincohranchnaturals.com"
+      ],
+      "auth": "none",
+      "limits": "GET only, no redirects, 20-second timeout",
+      "paid": false
+    },
+    {
+      "name": "Blotato",
+      "role": "separate planned runner; not called by this package",
+      "paid": "requires explicit existing-credit approval",
+      "hosts": []
+    },
+    {
+      "name": "certifi",
+      "license": "MPL-2.0",
+      "role": "Local Mozilla CA bundle for verified HTTPS; no global certificate changes",
+      "paid": false,
+      "hosts": []
+    }
+  ],
+  "excluded": [
+    "Publishing commands",
+    "Hosted third-party MCP",
+    "Direct paid generation APIs",
+    "Bulk media downloads"
+  ]
+}

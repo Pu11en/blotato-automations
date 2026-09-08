@@ -4,7 +4,7 @@
   "plan_owner": "1546835808072245338",
   "role": "planning-and-integration-owner",
   "authorization": "User: yes do it plan for build",
-  "implementation_authorized": false,
+  "implementation_authorized": true,
   "decisions": [
     {
       "decision": "Pinterest research and commercial feedback are a separate change from the existing media runner.",
@@ -14,5 +14,15 @@
       "decision": "Deliver a local research and brief MVP with manual imports and no publishing.",
       "reason": "Validate demand, visual quality and attribution before increasing automation."
     }
-  ]
+  ],
+  "build_authorization": "User: OK go (after plan 414f96b)",
+  "approved_plan_commit": "414f96b",
+  "approved_plan_sha256": {
+    "README.md": "a9c67b3cd9e7e71183c039a643d63963b378dfbd99d38f193b15d5120e1f63d3",
+    "tasks.md": "3c1b9e54519f78180c51e9485c0648f4285c9166fed59678d0015d86367e687e",
+    "design.md": "243b3f6fae3a2d99b53295fb7b945d80b8ff6c113a75f34b1b2af550cf5103b5",
+    "proposal.md": "26cc6cf6195087c7cbf81376a715b27053cee72f66d301857df9ecf34af09d01",
+    "specs/pinterest-opportunity-research/spec.md": "787893108ab60979fae7c11b79dbc2da12d4a3f23c4a0a66d2c38f1e9e36c7e9",
+    "specs/pinterest-content-experiments/spec.md": "531b8420decd82649b29e95a4095a0c6ba3f503f973d1e7669cf735f774e6f94"
+  }
 }

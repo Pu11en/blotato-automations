@@ -107,3 +107,5 @@ Create each experiment from [`templates/experiment.md`](templates/experiment.md)
 - Put explicit approval before publishing and before expensive generation calls.
 - Cap retries and polling loops; Blotato creation operations are asynchronous.
 - Log request IDs and terminal status so failed jobs are observable and not accidentally duplicated.
+
+The implemented local Pinterest research, creative brief and experiment-reporting workflow is documented in [`docs/pinterest-workflow.md`](docs/pinterest-workflow.md). Live account connections are separate readiness checks.

@@ -1,0 +1,322 @@
+[
+  {
+    "schema_version": 1,
+    "experiment_id": "harvest-flecks",
+    "asset_id": "harvest-flecks-static-v1",
+    "pin_id": "900000000000000001",
+    "source": "pinterest",
+    "account_id": "fixture-pinterest",
+    "metric": "impressions",
+    "value": 1000,
+    "period": {
+      "start": "2026-08-01",
+      "end": "2026-08-08"
+    },
+    "extracted_at": "2026-08-09T00:00:00+00:00",
+    "timezone": "America/Chicago",
+    "currency": null,
+    "attribution_model": "not_applicable",
+    "attribution_window": "not_applicable",
+    "mode": "fixture"
+  },
+  {
+    "schema_version": 1,
+    "experiment_id": "harvest-flecks",
+    "asset_id": "harvest-flecks-static-v1",
+    "pin_id": "900000000000000001",
+    "source": "pinterest",
+    "account_id": "fixture-pinterest",
+    "metric": "saves",
+    "value": 12,
+    "period": {
+      "start": "2026-08-01",
+      "end": "2026-08-08"
+    },
+    "extracted_at": "2026-08-09T00:00:00+00:00",
+    "timezone": "America/Chicago",
+    "currency": null,
+    "attribution_model": "not_applicable",
+    "attribution_window": "not_applicable",
+    "mode": "fixture"
+  },
+  {
+    "schema_version": 1,
+    "experiment_id": "harvest-flecks",
+    "asset_id": "harvest-flecks-static-v1",
+    "pin_id": "900000000000000001",
+    "source": "pinterest",
+    "account_id": "fixture-pinterest",
+    "metric": "outbound_clicks",
+    "value": 30,
+    "period": {
+      "start": "2026-08-01",
+      "end": "2026-08-08"
+    },
+    "extracted_at": "2026-08-09T00:00:00+00:00",
+    "timezone": "America/Chicago",
+    "currency": null,
+    "attribution_model": "not_applicable",
+    "attribution_window": "not_applicable",
+    "mode": "fixture"
+  },
+  {
+    "schema_version": 1,
+    "experiment_id": "harvest-flecks",
+    "asset_id": "harvest-flecks-static-v1",
+    "pin_id": "900000000000000001",
+    "source": "website",
+    "account_id": "fixture-website",
+    "metric": "sessions",
+    "value": 24,
+    "period": {
+      "start": "2026-08-01",
+      "end": "2026-08-08"
+    },
+    "extracted_at": "2026-08-09T00:00:00+00:00",
+    "timezone": "America/Chicago",
+    "currency": null,
+    "attribution_model": "utm_last_click",
+    "attribution_window": "30d",
+    "mode": "fixture"
+  },
+  {
+    "schema_version": 1,
+    "experiment_id": "harvest-flecks",
+    "asset_id": "harvest-flecks-static-v1",
+    "pin_id": "900000000000000001",
+    "source": "website",
+    "account_id": "fixture-website",
+    "metric": "orders",
+    "value": 2,
+    "period": {
+      "start": "2026-08-01",
+      "end": "2026-08-08"
+    },
+    "extracted_at": "2026-08-09T00:00:00+00:00",
+    "timezone": "America/Chicago",
+    "currency": null,
+    "attribution_model": "utm_last_click",
+    "attribution_window": "30d",
+    "mode": "fixture"
+  },
+  {
+    "schema_version": 1,
+    "experiment_id": "harvest-flecks",
+    "asset_id": "harvest-flecks-static-v1",
+    "pin_id": "900000000000000001",
+    "source": "website",
+    "account_id": "fixture-website",
+    "metric": "revenue",
+    "value": 18,
+    "period": {
+      "start": "2026-08-01",
+      "end": "2026-08-08"
+    },
+    "extracted_at": "2026-08-09T00:00:00+00:00",
+    "timezone": "America/Chicago",
+    "currency": "USD",
+    "attribution_model": "utm_last_click",
+    "attribution_window": "30d",
+    "mode": "fixture"
+  },
+  {
+    "schema_version": 1,
+    "experiment_id": "harvest-flecks",
+    "asset_id": "harvest-flecks-static-v1",
+    "pin_id": "900000000000000001",
+    "source": "website",
+    "account_id": "fixture-website",
+    "metric": "refunds",
+    "value": 0,
+    "period": {
+      "start": "2026-08-01",
+      "end": "2026-08-08"
+    },
+    "extracted_at": "2026-08-09T00:00:00+00:00",
+    "timezone": "America/Chicago",
+    "currency": "USD",
+    "attribution_model": "utm_last_click",
+    "attribution_window": "30d",
+    "mode": "fixture"
+  },
+  {
+    "schema_version": 1,
+    "experiment_id": "harvest-flecks",
+    "asset_id": "harvest-flecks-static-v1",
+    "pin_id": "900000000000000001",
+    "source": "costs",
+    "account_id": "fixture-costs",
+    "metric": "production_cost",
+    "value": 1,
+    "period": {
+      "start": "2026-08-01",
+      "end": "2026-08-08"
+    },
+    "extracted_at": "2026-08-09T00:00:00+00:00",
+    "timezone": "America/Chicago",
+    "currency": "USD",
+    "attribution_model": "not_applicable",
+    "attribution_window": "not_applicable",
+    "mode": "fixture"
+  },
+  {
+    "schema_version": 1,
+    "experiment_id": "harvest-flecks",
+    "asset_id": "harvest-flecks-video-v1",
+    "pin_id": "900000000000000002",
+    "source": "pinterest",
+    "account_id": "fixture-pinterest",
+    "metric": "impressions",
+    "value": 1000,
+    "period": {
+      "start": "2026-08-01",
+      "end": "2026-08-08"
+    },
+    "extracted_at": "2026-08-09T00:00:00+00:00",
+    "timezone": "America/Chicago",
+    "currency": null,
+    "attribution_model": "not_applicable",
+    "attribution_window": "not_applicable",
+    "mode": "fixture"
+  },
+  {
+    "schema_version": 1,
+    "experiment_id": "harvest-flecks",
+    "asset_id": "harvest-flecks-video-v1",
+    "pin_id": "900000000000000002",
+    "source": "pinterest",
+    "account_id": "fixture-pinterest",
+    "metric": "saves",
+    "value": 12,
+    "period": {
+      "start": "2026-08-01",
+      "end": "2026-08-08"
+    },
+    "extracted_at": "2026-08-09T00:00:00+00:00",
+    "timezone": "America/Chicago",
+    "currency": null,
+    "attribution_model": "not_applicable",
+    "attribution_window": "not_applicable",
+    "mode": "fixture"
+  },
+  {
+    "schema_version": 1,
+    "experiment_id": "harvest-flecks",
+    "asset_id": "harvest-flecks-video-v1",
+    "pin_id": "900000000000000002",
+    "source": "pinterest",
+    "account_id": "fixture-pinterest",
+    "metric": "outbound_clicks",
+    "value": 30,
+    "period": {
+      "start": "2026-08-01",
+      "end": "2026-08-08"
+    },
+    "extracted_at": "2026-08-09T00:00:00+00:00",
+    "timezone": "America/Chicago",
+    "currency": null,
+    "attribution_model": "not_applicable",
+    "attribution_window": "not_applicable",
+    "mode": "fixture"
+  },
+  {
+    "schema_version": 1,
+    "experiment_id": "harvest-flecks",
+    "asset_id": "harvest-flecks-video-v1",
+    "pin_id": "900000000000000002",
+    "source": "website",
+    "account_id": "fixture-website",
+    "metric": "sessions",
+    "value": 24,
+    "period": {
+      "start": "2026-08-01",
+      "end": "2026-08-08"
+    },
+    "extracted_at": "2026-08-09T00:00:00+00:00",
+    "timezone": "America/Chicago",
+    "currency": null,
+    "attribution_model": "utm_last_click",
+    "attribution_window": "30d",
+    "mode": "fixture"
+  },
+  {
+    "schema_version": 1,
+    "experiment_id": "harvest-flecks",
+    "asset_id": "harvest-flecks-video-v1",
+    "pin_id": "900000000000000002",
+    "source": "website",
+    "account_id": "fixture-website",
+    "metric": "orders",
+    "value": 2,
+    "period": {
+      "start": "2026-08-01",
+      "end": "2026-08-08"
+    },
+    "extracted_at": "2026-08-09T00:00:00+00:00",
+    "timezone": "America/Chicago",
+    "currency": null,
+    "attribution_model": "utm_last_click",
+    "attribution_window": "30d",
+    "mode": "fixture"
+  },
+  {
+    "schema_version": 1,
+    "experiment_id": "harvest-flecks",
+    "asset_id": "harvest-flecks-video-v1",
+    "pin_id": "900000000000000002",
+    "source": "website",
+    "account_id": "fixture-website",
+    "metric": "revenue",
+    "value": 18,
+    "period": {
+      "start": "2026-08-01",
+      "end": "2026-08-08"
+    },
+    "extracted_at": "2026-08-09T00:00:00+00:00",
+    "timezone": "America/Chicago",
+    "currency": "USD",
+    "attribution_model": "utm_last_click",
+    "attribution_window": "30d",
+    "mode": "fixture"
+  },
+  {
+    "schema_version": 1,
+    "experiment_id": "harvest-flecks",
+    "asset_id": "harvest-flecks-video-v1",
+    "pin_id": "900000000000000002",
+    "source": "website",
+    "account_id": "fixture-website",
+    "metric": "refunds",
+    "value": 0,
+    "period": {
+      "start": "2026-08-01",
+      "end": "2026-08-08"
+    },
+    "extracted_at": "2026-08-09T00:00:00+00:00",
+    "timezone": "America/Chicago",
+    "currency": "USD",
+    "attribution_model": "utm_last_click",
+    "attribution_window": "30d",
+    "mode": "fixture"
+  },
+  {
+    "schema_version": 1,
+    "experiment_id": "harvest-flecks",
+    "asset_id": "harvest-flecks-video-v1",
+    "pin_id": "900000000000000002",
+    "source": "costs",
+    "account_id": "fixture-costs",
+    "metric": "production_cost",
+    "value": 1,
+    "period": {
+      "start": "2026-08-01",
+      "end": "2026-08-08"
+    },
+    "extracted_at": "2026-08-09T00:00:00+00:00",
+    "timezone": "America/Chicago",
+    "currency": "USD",
+    "attribution_model": "not_applicable",
+    "attribution_window": "not_applicable",
+    "mode": "fixture"
+  }
+]

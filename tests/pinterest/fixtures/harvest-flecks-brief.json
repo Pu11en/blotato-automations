@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "candidate_id": "harvest-flecks",
+  "version": 1,
+  "audience": "Buyers comparing handmade soap textures",
+  "keyword": "tallow soap",
+  "hook": "A closer look at After the Harvest",
+  "script": "Open on the real flecked bar. Move from detail to the complete product, then show the product name and a quiet shopping invitation.",
+  "static_layout": "Macro crop of the original bar occupies two thirds of the frame. Cream background, one restrained serif headline, small product name below. Keep the star embossing exact.",
+  "shots": [
+    {
+      "start": 0,
+      "end": 3,
+      "visual": "Use exact original product photo; frame the flecked surface with a restrained crop.",
+      "overlay": "A closer look at After the Harvest",
+      "asset_ids": [
+        "harvest-original"
+      ]
+    },
+    {
+      "start": 3,
+      "end": 8,
+      "visual": "Slowly reveal the complete original bar. Preserve shape and star embossing; no synthetic product motion.",
+      "overlay": "After the Harvest",
+      "asset_ids": [
+        "harvest-original"
+      ]
+    },
+    {
+      "start": 8,
+      "end": 12,
+      "visual": "Hold the real product image with a small brand credit and clear CTA.",
+      "overlay": "See the current bar",
+      "asset_ids": [
+        "harvest-original"
+      ]
+    }
+  ],
+  "asset_ids": [
+    "harvest-original"
+  ],
+  "claim_ids": [
+    "harvest-name",
+    "harvest-flecks"
+  ],
+  "cta": "See the current bar",
+  "audio": {
+    "choice": "ambient",
+    "direction": "Use a quiet, owned recording of the real product being placed on a surface. No added fake production sounds; request recording before render.",
+    "rights_evidence": null
+  },
+  "duration_seconds": 12
+}
