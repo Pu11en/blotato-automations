@@ -6,9 +6,9 @@
 
 ## 2. Safe Runner Foundation
 
-- [ ] 2.1 Implement the standard-library runner's configuration, atomic run-directory state, asset hashing, and resume behavior in `skills/blotato-brand-content/scripts/blotato_run.py`; verify an interrupted fixture resumes the stored external request instead of submitting another.
-- [ ] 2.2 Implement centralized recursive request/response sanitization and environment-only `BLOTATO_API_KEY` loading; verify fake API keys, authorization fields, cookies, and nested secret-like values never appear in console or saved fixture artifacts.
-- [ ] 2.3 Add strict input validation that rejects publishing fields, account IDs, external-provider credentials, unknown state transitions, inaccessible source assets, and profiles with missing provenance; verify each rejection occurs before an HTTP generation request.
+- [x] 2.1 Implement the standard-library runner's configuration, atomic run-directory state, asset hashing, and resume behavior in `skills/blotato-brand-content/scripts/blotato_run.py`; verify an interrupted fixture resumes the stored external request instead of submitting another.
+- [x] 2.2 Implement centralized recursive request/response sanitization and environment-only `BLOTATO_API_KEY` loading; verify fake API keys, authorization fields, cookies, and nested secret-like values never appear in console or saved fixture artifacts.
+- [x] 2.3 Add strict input validation that rejects publishing fields, account IDs, external-provider credentials, unknown state transitions, inaccessible source assets, and profiles with missing provenance; verify each rejection occurs before an HTTP generation request.
 
 ## 3. Live Inspection and Planning
 
