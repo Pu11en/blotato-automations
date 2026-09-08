@@ -61,6 +61,8 @@ The first-party website, catalog, brand-story, social-footprint, and claims-risk
 
 The proposed real-ranch content strategy, claims firewall, six-video test, and Blotato production loop for Cinco H Ranch Naturals are in [`docs/cinco-h-ranch-content-pipeline.md`](docs/cinco-h-ranch-content-pipeline.md).
 
+The implementation-ready plan for the reusable, approval-gated Blotato brand automation skill is in [`openspec/changes/add-blotato-brand-automation-skill/`](openspec/changes/add-blotato-brand-automation-skill/).
+
 ## First three experiments
 
 1. **Evidence-backed carousel** — turn a useful source into a concise tutorial carousel.

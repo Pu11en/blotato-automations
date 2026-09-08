@@ -1,0 +1,24 @@
+{
+  "change": "add-blotato-brand-automation-skill",
+  "thread_id": "1546735219921522818",
+  "plan_owner": "1546735219921522818",
+  "role": "planning-and-integration-owner",
+  "decisions": [
+    {
+      "decision": "Build a reusable project-local skill with brand profiles rather than a Cinco-only script.",
+      "reason": "The repository is intended to hold multiple Blotato automations, while Cinco H Ranch is the first concrete profile and test case."
+    },
+    {
+      "decision": "Exclude publishing from version one.",
+      "reason": "The user wants generation quality proven first and has prohibited use of currently connected social accounts."
+    },
+    {
+      "decision": "Treat reference editing as template-dependent and fail closed when the live schema does not expose a source-image input.",
+      "reason": "Blotato lists Nano Banana edit models publicly but does not document a universal reference-image request contract."
+    },
+    {
+      "decision": "Require human approval between image generation and video animation.",
+      "reason": "Animation can amplify label, product, and identity distortion while consuming substantially more credits."
+    }
+  ]
+}
