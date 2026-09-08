@@ -28,12 +28,12 @@
   "assets": [
     {
       "id": "harvest-original",
-      "path": null,
-      "sha256": null,
+      "path": "brands/cinco-h-ranch/assets/after-the-harvest-soap-front.png",
+      "sha256": "7db3b37d7b21691bc99082612034f7241eb642bab7303ce02c6ad3bea28451fc",
       "source_url": "https://static.wixstatic.com/media/32290d_0af384bde2034236b858a26d026133a1~mv2.png",
-      "rights": "reference_only",
-      "rights_evidence": null,
-      "approved": false
+      "rights": "owned",
+      "rights_evidence": "Brand's own product photo from cincohranchnaturals.com; retrieval directed by the brand operator in the 2026-09-08 planning thread (see brands/cinco-h-ranch/README.md).",
+      "approved": true
     }
   ],
   "claims": [
@@ -41,13 +41,13 @@
       "id": "harvest-name",
       "text": "After the Harvest Tallow Soap Bar",
       "source_url": "https://www.cincohranchnaturals.com/product-page/after-the-harvest-tallow-soap-bar",
-      "approved": false
+      "approved": true
     },
     {
       "id": "harvest-flecks",
       "text": "Made with soap scraps; colors and flecks vary between batches.",
       "source_url": "https://www.cincohranchnaturals.com/product-page/after-the-harvest-tallow-soap-bar",
-      "approved": false
+      "approved": true
     }
   ],
   "accounts": {

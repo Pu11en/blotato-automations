@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "candidate_id": "cand-after-the-harvest-video-pin-v1",
+  "version": 1,
+  "audience": "Pinterest users searching handmade/tallow soap, homestead-style natural living, and small-batch gift ideas.",
+  "keyword": "tallow soap",
+  "hook": "Real ranch. Real soap scraps. Nothing wasted.",
+  "script": "On-screen captions only, no narration (muted-first): (1) 'Real ranch. Real soap scraps. Nothing wasted.' (2) 'After the Harvest Tallow Soap Bar' (3) 'Made with soap scraps -- colors and flecks vary every batch' (4) 'Handmade in small batches on our Texas homestead' (5) 'Cinco H Ranch Naturals'.",
+  "static_layout": "Single vertical 9:16 frame: the real After the Harvest bar centered, star emblem visible, bottom-third caption band, brand wordmark small in a corner -- used as the opening/closing slide of the video.",
+  "shots": [
+    { "start": 0, "end": 3, "visual": "Real product photo of the After the Harvest bar, emblem in focus, top-of-frame caption fades in.", "overlay": "Real ranch. Real soap scraps. Nothing wasted.", "asset_ids": ["harvest-original"] },
+    { "start": 3, "end": 6, "visual": "Same real product photo, slow zoom, caption changes to name the product.", "overlay": "After the Harvest Tallow Soap Bar", "asset_ids": ["harvest-original"] },
+    { "start": 6, "end": 9, "visual": "Same real product photo, caption states the sourced factual claim about flecks/scraps.", "overlay": "Made with soap scraps -- colors and flecks vary every batch", "asset_ids": ["harvest-original"] },
+    { "start": 9, "end": 12, "visual": "Same real product photo, caption closes with the homestead/process fact and brand name.", "overlay": "Handmade in small batches on our Texas homestead -- Cinco H Ranch Naturals", "asset_ids": ["harvest-original"] }
+  ],
+  "asset_ids": ["harvest-original"],
+  "claim_ids": ["harvest-name", "harvest-flecks"],
+  "cta": "See the full batch at cincohranchnaturals.com",
+  "audio": {
+    "choice": "silence",
+    "direction": "Deliberately silent/caption-driven: editorial evidence shows ~85% of Pinterest viewers watch muted, so the message must not depend on sound.",
+    "rights_evidence": null
+  },
+  "duration_seconds": 12
+}

@@ -1,0 +1,21 @@
+[
+  {
+    "schema_version": 1,
+    "id": "cand-after-the-harvest-video-pin-v1",
+    "product_id": "after-the-harvest",
+    "keyword": "tallow soap",
+    "signal_ids": [
+      "editorial-video-vs-static-engagement-2026-09-08",
+      "editorial-muted-autoplay-behavior-2026-09-08"
+    ],
+    "reference_ids": [],
+    "rationale": "Pinterest's own published creative benchmarks show video pins under 30s get ~6.2x the CTR and ~4.8x the save rate of static pins in the same category, but ~85% of viewers watch muted -- so the concept must carry its message through on-screen text and strong visuals, not narration. Cinco H Ranch has a real, checksum-verified product photo of the After the Harvest bar plus real homestead/ranch photography assets. A short vertical (9:16) slideshow-style video -- real product photo, real emblem, factual on-screen captions sourced from the approved brand profile -- fits the format Pinterest rewards without inventing footage or making unapproved claims.",
+    "scores": {
+      "product_fit": { "value": 2, "reason": "Tallow soap is a core catalog item with an already-approved, checksum-verified product photo." },
+      "shopping_intent": { "value": 2, "reason": "\"Tallow soap\" and \"handmade soap\" are established Pinterest shopping-search categories per the editorial evidence and competitor precedent." },
+      "demand_evidence": { "value": 0, "reason": "placeholder; overwritten by rank() because no measured (non-editorial) demand signal exists for this keyword" },
+      "visual_opportunity": { "value": 2, "reason": "Real embossed star emblem and homestead-porch styling are distinctive, stop-scroll visuals; format research favors short vertical captioned video over static for this exact category." },
+      "asset_readiness": { "value": 1, "reason": "One real, rights-owned product photo exists; no additional ranch/process footage has been ingested yet, so the video composites the real photo with generated/text scenes rather than a full real-footage sequence." }
+    }
+  }
+]

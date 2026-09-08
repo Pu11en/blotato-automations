@@ -1,0 +1,77 @@
+[
+  {
+    "availability": "available",
+    "growth": {
+      "mom": null,
+      "wow": null,
+      "yoy": null
+    },
+    "id": "editorial-video-vs-static-engagement-2026-09-08",
+    "metric_definition": "Editorial synthesis of Pinterest's published creative benchmarks: video Pin ads average ~3.2x the engagement of static Pins and ~2.4x higher brand lift; video pins under 30s show 6.2x higher CTR and 4.8x higher save rate than static image pins in the same product categories. Not a keyword-specific numeric demand series.",
+    "mode": "manual",
+    "normalization": "not_applicable",
+    "observation_period": {
+      "end": "2026-09-08",
+      "start": "2026-09-08"
+    },
+    "query": "tallow soap",
+    "region": "US",
+    "retrieved_at": "2026-09-08T18:20:00+00:00",
+    "schema_version": 1,
+    "snapshot_hash": "dc71af05110ec176c692adcbdea1330bac6cb3426199af4319e3c4e8b3bdbd98",
+    "source_type": "editorial",
+    "source_url": "https://www.yansmedia.com/blog/pinterest-video-stats",
+    "time_series": {},
+    "unit": "editorial_only"
+  },
+  {
+    "availability": "available",
+    "growth": {
+      "mom": null,
+      "wow": null,
+      "yoy": null
+    },
+    "id": "editorial-muted-autoplay-behavior-2026-09-08",
+    "metric_definition": "Editorial synthesis: approximately 85% of Pinterest users watch video with sound off, so pins relying on voiceover/audio to carry the message underperform; Pinterest recommends 6-15 second videos with strong visual hooks and on-screen text/captions, vertical (9:16) or square framing. Not a keyword-specific numeric demand series.",
+    "mode": "manual",
+    "normalization": "not_applicable",
+    "observation_period": {
+      "end": "2026-09-08",
+      "start": "2026-09-08"
+    },
+    "query": "tallow soap",
+    "region": "US",
+    "retrieved_at": "2026-09-08T18:20:00+00:00",
+    "schema_version": 1,
+    "snapshot_hash": "a4f7f71c45143d0c413d615d04be849465f1fb560665584613614255083f48f9",
+    "source_type": "editorial",
+    "source_url": "https://www.b2w.tv/blog/pinterest-video-strategy",
+    "time_series": {},
+    "unit": "editorial_only"
+  },
+  {
+    "availability": "available",
+    "growth": {
+      "mom": null,
+      "wow": null,
+      "yoy": null
+    },
+    "id": "editorial-homestead-niche-precedent-2026-09-08",
+    "metric_definition": "Editorial observation: multiple established Pinterest-active competitors (e.g. Heritage Homestead, Hearth & Homestead) position ancestral/homestead-made tallow skincare as their core keyword angle, indicating this framing has active, discoverable search demand on Pinterest. Not a keyword-specific numeric demand series; used only to validate that the homestead/ranch-origin angle is search-relevant, not to copy any competitor's specific health claims.",
+    "mode": "manual",
+    "normalization": "not_applicable",
+    "observation_period": {
+      "end": "2026-09-08",
+      "start": "2026-09-08"
+    },
+    "query": "tallow soap homestead",
+    "region": "US",
+    "retrieved_at": "2026-09-08T18:20:00+00:00",
+    "schema_version": 1,
+    "snapshot_hash": "1c6eb366e46234ea45c3f10b49e231d78bc5eabbd50d8f7677f6db6a6f155d42",
+    "source_type": "editorial",
+    "source_url": "https://heritagehomesteadco.com/",
+    "time_series": {},
+    "unit": "editorial_only"
+  }
+]
