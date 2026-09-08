@@ -5,3 +5,7 @@ Research notes belong here. Prefer first-party documentation and source reposito
 ## Brand research
 
 - [`cinco-h-ranch-brand-audit.md`](cinco-h-ranch-brand-audit.md) — first-party audit of the ranch story, catalog, visual identity, social footprint, content opportunities, and claims risks.
+
+## Platform research
+
+- [`blotato-model-catalog.md`](blotato-model-catalog.md) — current official model catalog, credit costs, template/API caveats, and the recommended Cinco H Ranch shortlist.

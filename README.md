@@ -51,6 +51,8 @@ The paid-tool restriction, reference-media rules, and mandatory workflow/output 
 
 The current evidence for exact assets, image references, consistent characters, Brand Kit behavior, and required live tests is in [`research/blotato-reference-media.md`](research/blotato-reference-media.md).
 
+The current Blotato image, video, voice, and text-model catalog—with credit costs and outside-key exclusions—is in [`research/blotato-model-catalog.md`](research/blotato-model-catalog.md).
+
 The evidence-ranked public output gallery, generation-versus-publishing distinctions, and quality verdict are in [`research/public-blotato-output-examples.md`](research/public-blotato-output-examples.md).
 
 The real-user scan across the local Twitter/X and Reddit scrapers—including production accounts, direct outputs, and rejected promotional claims—is in [`research/real-user-blotato-reddit.md`](research/real-user-blotato-reddit.md).
