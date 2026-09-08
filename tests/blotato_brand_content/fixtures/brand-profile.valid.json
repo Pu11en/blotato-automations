@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "brand_id": "fixture-brand",
+  "display_name": "Fixture Brand",
+  "last_reviewed_at": "2026-09-01T00:00:00Z",
+  "identity": {
+    "legal_name": "Fixture Brand LLC",
+    "founders": [
+      { "name": "Jane Fixture", "identity_generation_allowed": false }
+    ],
+    "exact_assets": [
+      { "asset_id": "logo-primary", "description": "Primary wordmark logo" }
+    ]
+  },
+  "facts": [
+    {
+      "id": "fact-founded-2020",
+      "text": "Fixture Brand was founded in 2020.",
+      "source_url": "https://example.com/about",
+      "category": "history"
+    }
+  ],
+  "claims": {
+    "approved": [
+      {
+        "id": "claim-founded",
+        "pattern": "founded in 2020",
+        "reason": "Matches public about page.",
+        "fact_id": "fact-founded-2020"
+      }
+    ],
+    "review_required": [
+      { "id": "claim-natural", "pattern": "all natural", "reason": "Requires legal review per product line." }
+    ],
+    "blocked": [
+      { "id": "claim-cures", "pattern": "cures", "reason": "Disease-treatment claim; never usable." }
+    ]
+  },
+  "visual_identity": {
+    "palette": ["#2E7D32", "#F5F5DC"],
+    "typography": "Serif headline, sans body",
+    "logo_rules": "Never recolor or stretch the wordmark.",
+    "prohibited_visual_claims": ["medical cross imagery", "bandage imagery"]
+  },
+  "assets": [
+    {
+      "asset_id": "product-jar-front",
+      "path": "brands/fixture-brand/assets/product-jar-front.jpg",
+      "checksum_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "provenance": "Brand-supplied original studio photo",
+      "rights": "owned",
+      "permission_reference": "internal-asset-log#42",
+      "default_render_strategy": "exact-asset"
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 ## 1. Skill and Data Contracts
 
-- [ ] 1.1 Scaffold `skills/blotato-brand-content/` with `SKILL.md`, `agents/openai.yaml`, focused references, and a scripts directory; run the skill creator's `quick_validate.py` and verify the package has no placeholder content.
-- [ ] 1.2 Add `schemas/brand-profile.schema.json` and `schemas/blotato-run.schema.json` covering profile facts/claims/assets and the complete run state machine; verify valid and intentionally invalid fixtures against both schemas.
-- [ ] 1.3 Add `brands/cinco-h-ranch/profile.json` and `claims.json` from the approved audit, including source URLs, exact-identity fields, permission metadata, green/yellow/red language, and timestamps; verify the profile passes the schema and representative sunscreen, pest, pain, disease, and healing copy is blocked.
+- [x] 1.1 Scaffold `skills/blotato-brand-content/` with `SKILL.md`, `agents/openai.yaml`, focused references, and a scripts directory; run the skill creator's `quick_validate.py` and verify the package has no placeholder content.
+- [x] 1.2 Add `schemas/brand-profile.schema.json` and `schemas/blotato-run.schema.json` covering profile facts/claims/assets and the complete run state machine; verify valid and intentionally invalid fixtures against both schemas.
+- [x] 1.3 Add `brands/cinco-h-ranch/profile.json` and `claims.json` from the approved audit, including source URLs, exact-identity fields, permission metadata, green/yellow/red language, and timestamps; verify the profile passes the schema and representative sunscreen, pest, pain, disease, and healing copy is blocked.
 
 ## 2. Safe Runner Foundation
 

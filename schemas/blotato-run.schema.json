@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://blotato-automations.local/schemas/blotato-run.schema.json",
+  "title": "Blotato run state",
+  "description": "Complete state machine and evidence contract for one blotato-brand-content run.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "run_id", "brand_id", "created_at", "updated_at", "state"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "run_id": { "type": "string", "minLength": 1 },
+    "brand_id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "created_at": { "type": "string", "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "state": {
+      "type": "string",
+      "enum": [
+        "INSPECTED",
+        "PLANNED",
+        "IMAGE_RUNNING",
+        "IMAGE_READY",
+        "IMAGE_APPROVED",
+        "VIDEO_RUNNING",
+        "VIDEO_READY",
+        "AUDIT_READY",
+        "FAILED",
+        "TIMED_OUT",
+        "REJECTED"
+      ]
+    },
+    "credits": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "starting_balance": { "type": "number", "minimum": 0 },
+        "estimate": { "type": "number", "minimum": 0 },
+        "max_credits": { "type": "number", "exclusiveMinimum": 0 },
+        "observed_delta_total": { "type": "number", "minimum": 0 },
+        "concurrent_spend_suspected": { "type": "boolean" }
+      }
+    },
+    "source_asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["asset_id", "checksum_sha256"],
+      "properties": {
+        "asset_id": { "type": "string", "minLength": 1 },
+        "checksum_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      }
+    },
+    "plan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "approval_digest",
+        "render_strategy",
+        "template_id",
+        "operation",
+        "prompt",
+        "max_credits"
+      ],
+      "properties": {
+        "approval_digest": { "type": "string", "minLength": 1 },
+        "render_strategy": {
+          "type": "string",
+          "enum": ["reference-edit", "exact-asset", "exact-overlay"]
+        },
+        "template_id": { "type": "string", "minLength": 1 },
+        "template_snapshot_at": { "type": "string", "format": "date-time" },
+        "operation": {
+          "type": "string",
+          "enum": ["image-edit", "image-to-video"]
+        },
+        "model": { "type": "string" },
+        "prompt": { "type": "string", "minLength": 1 },
+        "max_credits": { "type": "number", "exclusiveMinimum": 0 },
+        "cost_estimate": { "type": "number", "minimum": 0 },
+        "fallbacks": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "image": { "$ref": "#/$defs/generationRecord" },
+    "video": { "$ref": "#/$defs/generationRecord" },
+    "image_approval": { "$ref": "#/$defs/approvalRecord" },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["at", "stage", "message"],
+        "properties": {
+          "at": { "type": "string", "format": "date-time" },
+          "stage": { "type": "string" },
+          "message": { "type": "string" }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "state": { "const": "IMAGE_RUNNING" } } },
+      "then": { "required": ["plan", "image"] }
+    },
+    {
+      "if": { "properties": { "state": { "const": "IMAGE_READY" } } },
+      "then": { "required": ["plan", "image"] }
+    },
+    {
+      "if": { "properties": { "state": { "const": "IMAGE_APPROVED" } } },
+      "then": { "required": ["plan", "image", "image_approval"] }
+    },
+    {
+      "if": { "properties": { "state": { "const": "VIDEO_RUNNING" } } },
+      "then": { "required": ["plan", "image", "image_approval", "video"] }
+    },
+    {
+      "if": { "properties": { "state": { "const": "VIDEO_READY" } } },
+      "then": { "required": ["plan", "image", "image_approval", "video"] }
+    },
+    {
+      "if": { "properties": { "state": { "const": "AUDIT_READY" } } },
+      "then": { "required": ["plan", "image", "image_approval"] }
+    }
+  ],
+  "$defs": {
+    "generationRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["request_id", "status", "submitted_at"],
+      "properties": {
+        "request_id": { "type": "string", "minLength": 1 },
+        "status": {
+          "type": "string",
+          "enum": ["submitted", "polling", "succeeded", "failed", "timed_out"]
+        },
+        "submitted_at": { "type": "string", "format": "date-time" },
+        "completed_at": { "type": "string", "format": "date-time" },
+        "output_path": { "type": "string" },
+        "checksum_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "credits_observed_delta": { "type": "number", "minimum": 0 }
+      }
+    },
+    "approvalRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision", "bound_checksum_sha256", "decided_at", "decision_reference"],
+      "properties": {
+        "decision": { "type": "string", "enum": ["approved", "revise", "rejected"] },
+        "bound_checksum_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "decided_at": { "type": "string", "format": "date-time" },
+        "decision_reference": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Pointer to the human's actual approving message/session, never inferred."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,199 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://blotato-automations.local/schemas/brand-profile.schema.json",
+  "title": "Brand profile",
+  "description": "Machine-readable brand facts, claims firewall, visual identity, and asset provenance used to gate Blotato generation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "brand_id",
+    "display_name",
+    "last_reviewed_at",
+    "identity",
+    "facts",
+    "claims",
+    "visual_identity",
+    "assets"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "brand_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Kebab-case id matching the brands/<brand_id>/ directory."
+    },
+    "display_name": { "type": "string", "minLength": 1 },
+    "last_reviewed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp the profile facts were last human-reviewed against source."
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["legal_name", "exact_assets"],
+      "properties": {
+        "legal_name": { "type": "string", "minLength": 1 },
+        "founders": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name"],
+            "properties": {
+              "name": { "type": "string", "minLength": 1 },
+              "identity_generation_allowed": {
+                "type": "boolean",
+                "description": "Whether this person's likeness may ever be sent to a generative model. Defaults to false when absent."
+              }
+            }
+          }
+        },
+        "exact_assets": {
+          "type": "array",
+          "minItems": 0,
+          "description": "Product/logo assets whose pixels must not be altered by generation (see exact-asset / exact-overlay strategies).",
+          "items": { "$ref": "#/$defs/exactAsset" }
+        }
+      }
+    },
+    "facts": {
+      "type": "array",
+      "description": "Approved factual statements usable in generation prompts and copy.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "text", "source_url"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^fact-[a-z0-9-]+$" },
+          "text": { "type": "string", "minLength": 1 },
+          "source_url": { "type": "string", "format": "uri" },
+          "category": { "type": "string" }
+        }
+      }
+    },
+    "claims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["approved", "review_required", "blocked"],
+      "description": "Green/yellow/red claims language firewall.",
+      "properties": {
+        "approved": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/approvedClaimEntry" }
+        },
+        "review_required": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/claimEntry" }
+        },
+        "blocked": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/claimEntry" }
+        }
+      }
+    },
+    "visual_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["palette", "prohibited_visual_claims"],
+      "properties": {
+        "palette": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "typography": { "type": "string" },
+        "logo_rules": { "type": "string" },
+        "prohibited_visual_claims": {
+          "type": "array",
+          "description": "Visual depictions that would imply a blocked claim even without matching text, e.g. a syringe or a bandage.",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "assets": {
+      "type": "array",
+      "description": "All asset files this brand may reference in a run, with provenance and rights metadata.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["asset_id", "path", "provenance", "rights", "default_render_strategy"],
+        "properties": {
+          "asset_id": { "type": "string", "minLength": 1 },
+          "path": { "type": "string", "minLength": 1 },
+          "checksum_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+          "provenance": {
+            "type": "string",
+            "description": "Where this asset came from, e.g. brand-supplied original photo, licensed stock, prior approved generation."
+          },
+          "rights": {
+            "type": "string",
+            "enum": ["owned", "licensed", "unknown"]
+          },
+          "permission_reference": {
+            "type": "string",
+            "description": "Pointer to the license, release, or owner approval covering this asset."
+          },
+          "default_render_strategy": {
+            "type": "string",
+            "enum": ["exact-asset", "exact-overlay", "reference-edit"]
+          }
+        },
+        "allOf": [
+          {
+            "if": { "properties": { "rights": { "const": "unknown" } } },
+            "then": {
+              "properties": {
+                "default_render_strategy": { "const": "reference-edit" }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "claimEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "pattern"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "pattern": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Case-insensitive substring or regex the deterministic gate matches against."
+        },
+        "reason": { "type": "string" }
+      }
+    },
+    "approvedClaimEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "pattern", "fact_id"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "pattern": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Case-insensitive substring or regex the deterministic gate matches against."
+        },
+        "reason": { "type": "string" },
+        "fact_id": {
+          "type": "string",
+          "pattern": "^fact-[a-z0-9-]+$",
+          "description": "Ties the approved phrase back to a sourced fact."
+        }
+      }
+    },
+    "exactAsset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["asset_id", "description"],
+      "properties": {
+        "asset_id": { "type": "string", "minLength": 1 },
+        "description": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

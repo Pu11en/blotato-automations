@@ -1,0 +1,4 @@
+interface:
+  display_name: "Blotato Brand Content"
+  short_description: "Approval-gated Blotato image and video generation for an approved brand profile"
+  default_prompt: "Use $blotato-brand-content to inspect Blotato capabilities, plan a bounded brand asset generation, and run it stage by stage with explicit approval before each spend."

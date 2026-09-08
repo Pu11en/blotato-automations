@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "brand_id": "cinco-h-ranch",
+  "display_name": "Cinco H Ranch Naturals",
+  "last_reviewed_at": "2026-09-08T00:00:00Z",
+  "identity": {
+    "legal_name": "Cinco H Ranch Naturals",
+    "founders": [
+      { "name": "Carol", "identity_generation_allowed": false },
+      { "name": "Justin", "identity_generation_allowed": false }
+    ],
+    "exact_assets": [
+      {
+        "asset_id": "emblem-texas-star",
+        "description": "Distressed circular emblem built around a Texas star in cream, dark navy/black, and brick red."
+      },
+      {
+        "asset_id": "ranch-house-outline",
+        "description": "Outline of the real 130-plus-year-old original homestead house, used on product labels."
+      },
+      {
+        "asset_id": "product-labels",
+        "description": "Printed product labels bearing the ranch mark; never invent packaging, ingredients, or product appearance."
+      }
+    ]
+  },
+  "facts": [
+    {
+      "id": "fact-owner-made",
+      "text": "Every skincare product is made by the owners, Carol and Justin, by hand in their Texas kitchen, in small batches.",
+      "source_url": "https://www.cincohranchnaturals.com/faq",
+      "category": "process"
+    },
+    {
+      "id": "fact-tallow-lard-homestead",
+      "text": "Tallow and lard products are made on the homestead, and many infusions are made in-house.",
+      "source_url": "https://www.cincohranchnaturals.com/about",
+      "category": "process"
+    },
+    {
+      "id": "fact-homestead-recipes",
+      "text": "The brand's formulas are based on historical homestead recipes and traditions.",
+      "source_url": "https://www.cincohranchnaturals.com/about",
+      "category": "history"
+    },
+    {
+      "id": "fact-ranch-name",
+      "text": "The ranch is named Rancho de Cinco Hijas, for the family's five daughters.",
+      "source_url": "https://www.cincohranchnaturals.com/about",
+      "category": "history"
+    },
+    {
+      "id": "fact-house-outline",
+      "text": "The outline of the ranch's 130-plus-year-old original homestead house appears on product labels.",
+      "source_url": "https://www.cincohranchnaturals.com/about",
+      "category": "history"
+    },
+    {
+      "id": "fact-tallow-and-lard-roles",
+      "text": "The brand uses both tallow and lard, describing different functional roles for each rather than using tallow alone.",
+      "source_url": "https://www.cincohranchnaturals.com/faq",
+      "category": "formulation"
+    },
+    {
+      "id": "fact-essential-oils",
+      "text": "The brand avoids fragrance oils, using proprietary scent blends made from essential oils, and infuses some plants into carrier oils.",
+      "source_url": "https://www.cincohranchnaturals.com/faq",
+      "category": "formulation"
+    },
+    {
+      "id": "fact-unwhipped-creams",
+      "text": "Cream products are unwhipped, not an air-entrained whipped formula, so the jar contains the full amount of product.",
+      "source_url": "https://www.cincohranchnaturals.com/product-page/rejuvenating-tallow-face-body-cream",
+      "category": "formulation"
+    },
+    {
+      "id": "fact-catalog-breadth",
+      "text": "The catalog spans tallow soap bars, face and body creams, stick balms, and shave soaps, plus bundles.",
+      "source_url": "https://www.cincohranchnaturals.com/category/all-products",
+      "category": "catalog"
+    }
+  ],
+  "visual_identity": {
+    "palette": ["cream", "dark navy / black", "brick red"],
+    "logo_rules": "Exact labels, the ranch emblem, and containers must remain real; generative images must never invent packaging, ingredients, or product appearance.",
+    "prohibited_visual_claims": [
+      "sun rays or UV imagery implying tested sun protection",
+      "bug or insect imagery implying pest-repellent efficacy",
+      "ice pack, massage-on-injury, or joint/muscle-pain imagery implying pain relief",
+      "bandage, wound, or before/after skin-condition imagery implying treatment or healing",
+      "lab coat, syringe, or clinical imagery implying medical testing or endorsement"
+    ]
+  },
+  "assets": []
+}

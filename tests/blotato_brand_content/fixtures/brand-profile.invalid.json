@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "brand_id": "fixture-brand",
+  "display_name": "Fixture Brand",
+  "last_reviewed_at": "2026-09-01T00:00:00Z",
+  "identity": {
+    "legal_name": "Fixture Brand LLC",
+    "exact_assets": []
+  },
+  "facts": [],
+  "claims": {
+    "approved": [
+      {
+        "id": "claim-founded",
+        "pattern": "founded in 2020",
+        "reason": "Missing the required fact_id linking this claim to a sourced fact."
+      }
+    ],
+    "review_required": [],
+    "blocked": []
+  },
+  "visual_identity": {
+    "palette": ["#2E7D32"],
+    "prohibited_visual_claims": []
+  },
+  "assets": [
+    {
+      "asset_id": "product-jar-front",
+      "path": "brands/fixture-brand/assets/product-jar-front.jpg",
+      "provenance": "Unknown source, found on shared drive",
+      "rights": "unknown",
+      "default_render_strategy": "exact-asset"
+    }
+  ]
+}
