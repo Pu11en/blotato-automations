@@ -53,6 +53,8 @@ The current evidence for exact assets, image references, consistent characters, 
 
 The evidence-ranked public output gallery, generation-versus-publishing distinctions, and quality verdict are in [`research/public-blotato-output-examples.md`](research/public-blotato-output-examples.md).
 
+The real-user scan across the local Twitter/X and Reddit scrapers—including production accounts, direct outputs, and rejected promotional claims—is in [`research/real-user-blotato-reddit.md`](research/real-user-blotato-reddit.md).
+
 ## First three experiments
 
 1. **Evidence-backed carousel** — turn a useful source into a concise tutorial carousel.
