@@ -45,6 +45,8 @@ This is small enough to diagnose. Once one format wins consistently, move its ap
 
 The complete proposed infrastructure, channel-isolation rules, module interfaces, experiment design, and delivery phases are in [`docs/infrastructure-plan.md`](docs/infrastructure-plan.md).
 
+The recommended initial audience, content pillars, workflow to adapt, and first 12-post test are in [`docs/ai-builder-content-system.md`](docs/ai-builder-content-system.md).
+
 ## First three experiments
 
 1. **Evidence-backed carousel** — turn a useful source into a concise tutorial carousel.
