@@ -47,6 +47,10 @@ The complete proposed infrastructure, channel-isolation rules, module interfaces
 
 The recommended initial audience, content pillars, workflow to adapt, and first 12-post test are in [`docs/ai-builder-content-system.md`](docs/ai-builder-content-system.md).
 
+The paid-tool restriction, reference-media rules, and mandatory workflow/output audit are in [`docs/tooling-and-output-policy.md`](docs/tooling-and-output-policy.md).
+
+The current evidence for exact assets, image references, consistent characters, Brand Kit behavior, and required live tests is in [`research/blotato-reference-media.md`](research/blotato-reference-media.md).
+
 ## First three experiments
 
 1. **Evidence-backed carousel** — turn a useful source into a concise tutorial carousel.

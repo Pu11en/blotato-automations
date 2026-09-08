@@ -119,6 +119,8 @@ Use its structure, but make these changes:
 9. Produce platform-native adaptations rather than identical cross-posts.
 10. Keep Reddit publication manual.
 
+The imported workflow must also be stripped of every paid external content API. Codex may create the editorial plan and copy; Blotato must perform paid generation/rendering/publishing. Free APIs and local/open-source processing are permitted only under the repository's [`tooling-and-output-policy.md`](tooling-and-output-policy.md).
+
 Useful secondary references:
 
 - [Idea or URL → platform-specific posts](https://n8n.io/workflows/16349-create-ai-social-posts-from-telegram-links-with-openai-grok-and-blotato/) demonstrates a simple source-to-adaptation path.
@@ -210,3 +212,4 @@ Its input is one approved real build and its evidence. Its output is:
 
 Nothing publishes yet. This gives us a way to evaluate whether the content is genuinely interesting before creating channels or consuming a large credit balance.
 
+Before this intake is connected to a cloned workflow, create an output audit pack showing exactly how source images and clips are transformed at every stage. Identity-critical SaaS screenshots, UI, logos, and product images must be inserted directly into Blotato templates rather than redrawn by a generative image model.

@@ -21,6 +21,10 @@ The social accounts currently connected to Blotato are out of scope.
 - The first ten posts on a new channel require explicit human approval.
 - Deleting or disconnecting existing accounts is a separate, manually approved operation.
 
+## Non-negotiable tooling boundary
+
+Blotato is the only paid content API. Codex and this harness may perform the AI planning/writing work covered by the existing plan; local/open-source tools and documented free APIs are allowed. Direct paid calls to other image, video, voice, research, or automation providers are prohibited. See [`tooling-and-output-policy.md`](tooling-and-output-policy.md).
+
 ## Recommended foundation
 
 Use **n8n as the orchestrator**, **Postgres as the experiment ledger**, **Blotato as a replaceable creation/publishing adapter**, and **Discord as the approval and notification surface**.
@@ -230,6 +234,8 @@ Do not create all of these as empty scaffolding. Add each module only when its f
 - Mark all existing account IDs denied.
 - Create the empty allowlist and global kill switch.
 - Decide which single platform will host the first channel test.
+- Query the authenticated Blotato template catalog and verify all reference-media input schemas.
+- Audit one candidate workflow's nodes, dependencies, transformations, and sample output with publishing disabled.
 
 Exit condition: a dry run proves an existing account cannot receive a post.
 
@@ -293,4 +299,3 @@ manually entered approved idea
 ```
 
 This path proves the dangerous and valuable parts—approval, account isolation, publishing, cost tracking, and measurement—before adding automated niche research or high-volume generation.
-
