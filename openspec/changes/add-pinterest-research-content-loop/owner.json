@@ -1,0 +1,18 @@
+{
+  "change": "add-pinterest-research-content-loop",
+  "thread_id": "1546835808072245338",
+  "plan_owner": "1546835808072245338",
+  "role": "planning-and-integration-owner",
+  "authorization": "User: yes do it plan for build",
+  "implementation_authorized": false,
+  "decisions": [
+    {
+      "decision": "Pinterest research and commercial feedback are a separate change from the existing media runner.",
+      "reason": "Distinct user objective and planning owner; preserve earlier work."
+    },
+    {
+      "decision": "Deliver a local research and brief MVP with manual imports and no publishing.",
+      "reason": "Validate demand, visual quality and attribution before increasing automation."
+    }
+  ]
+}
