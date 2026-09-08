@@ -55,6 +55,10 @@ The evidence-ranked public output gallery, generation-versus-publishing distinct
 
 The real-user scan across the local Twitter/X and Reddit scrapers—including production accounts, direct outputs, and rejected promotional claims—is in [`research/real-user-blotato-reddit.md`](research/real-user-blotato-reddit.md).
 
+The first-party website, catalog, brand-story, social-footprint, and claims-risk audit for Cinco H Ranch Naturals is in [`research/cinco-h-ranch-brand-audit.md`](research/cinco-h-ranch-brand-audit.md).
+
+The proposed real-ranch content strategy, claims firewall, six-video test, and Blotato production loop for Cinco H Ranch Naturals are in [`docs/cinco-h-ranch-content-pipeline.md`](docs/cinco-h-ranch-content-pipeline.md).
+
 ## First three experiments
 
 1. **Evidence-backed carousel** — turn a useful source into a concise tutorial carousel.
