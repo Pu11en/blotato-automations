@@ -91,5 +91,33 @@
       "lab coat, syringe, or clinical imagery implying medical testing or endorsement"
     ]
   },
-  "assets": []
+  "assets": [
+    {
+      "asset_id": "emblem-texas-star",
+      "path": "brands/cinco-h-ranch/assets/emblem-texas-star.png",
+      "checksum_sha256": "334cd8e1cfdc29e69a61e19d1a61b59c1039372bf9cda4a9a51fe3c9c8038bdc",
+      "provenance": "Downloaded 2026-09-08 from the brand's own homepage emblem asset on cincohranchnaturals.com (Wix media CDN), per owner instruction to pull site assets for this build.",
+      "rights": "owned",
+      "permission_reference": "Brand's own public website; retrieval directed by the brand's operator in the 2026-09-08 planning thread.",
+      "default_render_strategy": "exact-asset"
+    },
+    {
+      "asset_id": "texas-campfire-soap-front",
+      "path": "brands/cinco-h-ranch/assets/texas-campfire-soap-front.jpg",
+      "checksum_sha256": "00db604b10fb95711e65d0ac3f48c2ae77589ca62e763e23677cc15af8fc5626",
+      "provenance": "Downloaded 2026-09-08 from the Texas Campfire Tallow Soap Bar product page on cincohranchnaturals.com (Wix media CDN); EXIF confirms original capture on iPhone 16 Pro, 2025-12-22.",
+      "rights": "owned",
+      "permission_reference": "Brand's own public website; retrieval directed by the brand's operator in the 2026-09-08 planning thread.",
+      "default_render_strategy": "exact-asset"
+    },
+    {
+      "asset_id": "after-the-harvest-soap-front",
+      "path": "brands/cinco-h-ranch/assets/after-the-harvest-soap-front.png",
+      "checksum_sha256": "7db3b37d7b21691bc99082612034f7241eb642bab7303ce02c6ad3bea28451fc",
+      "provenance": "Downloaded 2026-09-08 from the After the Harvest Tallow Soap Bar product page on cincohranchnaturals.com (Wix media CDN).",
+      "rights": "owned",
+      "permission_reference": "Brand's own public website; retrieval directed by the brand's operator in the 2026-09-08 planning thread.",
+      "default_render_strategy": "exact-asset"
+    }
+  ]
 }

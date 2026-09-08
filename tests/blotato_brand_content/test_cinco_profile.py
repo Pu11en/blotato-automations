@@ -1,3 +1,4 @@
+import hashlib
 import json
 import re
 import unittest
@@ -69,6 +70,16 @@ class CincoHRanchProfileTest(unittest.TestCase):
             "Customers use it to treat acne, rosacea, and infected wounds.",
         ]:
             self.assertTrue(matches_any(blocked, phrase), phrase)
+
+    def test_assets_exist_and_match_recorded_checksum(self):
+        assets = self.profile["assets"]
+        self.assertGreater(len(assets), 0, "expected at least one real ingested asset")
+        for asset in assets:
+            path = REPO_ROOT / asset["path"]
+            self.assertTrue(path.is_file(), f"missing asset file: {path}")
+            digest = hashlib.sha256(path.read_bytes()).hexdigest()
+            self.assertEqual(digest, asset["checksum_sha256"], asset["asset_id"])
+            self.assertEqual(asset["default_render_strategy"], "exact-asset")
 
     def test_approved_process_copy_is_not_blocked(self):
         blocked = self.profile["claims"]["blocked"]
