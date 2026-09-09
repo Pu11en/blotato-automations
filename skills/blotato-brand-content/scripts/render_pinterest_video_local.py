@@ -60,14 +60,16 @@ def crop_to_frame(im: Image.Image) -> Image.Image:
     return im.resize(FRAME_SIZE, Image.LANCZOS)
 
 
-def draw_caption(im: Image.Image, text: str) -> Image.Image:
-    im = im.convert("RGBA")
-    overlay = Image.new("RGBA", im.size, (0, 0, 0, 0))
+def caption_layer(text: str) -> Image.Image:
+    """A transparent RGBA overlay holding only the caption band, sized to
+    FRAME_SIZE. Kept separate from the photo so captions stay perfectly
+    fixed/legible while the photo underneath moves (Ken Burns)."""
+    overlay = Image.new("RGBA", FRAME_SIZE, (0, 0, 0, 0))
     draw = ImageDraw.Draw(overlay)
 
     font_size = 54
     font = ImageFont.truetype(FONT_PATH, font_size)
-    max_width = im.width - 120
+    max_width = FRAME_SIZE[0] - 120
     wrapped = textwrap.fill(text, width=28)
     lines = wrapped.split("\n")
 
@@ -83,17 +85,84 @@ def draw_caption(im: Image.Image, text: str) -> Image.Image:
     total_h = sum(line_heights) + line_gap * (len(lines) - 1)
     band_pad = 40
     band_h = total_h + band_pad * 2
-    band_top = im.height - band_h - 60
+    band_top = FRAME_SIZE[1] - band_h - 60
 
-    draw.rectangle([0, band_top, im.width, band_top + band_h], fill=(10, 10, 15, 190))
+    draw.rectangle([0, band_top, FRAME_SIZE[0], band_top + band_h], fill=(10, 10, 15, 190))
 
     y = band_top + band_pad
     for line, lh, lw in zip(lines, line_heights, line_widths):
-        x = (im.width - lw) // 2
+        x = (FRAME_SIZE[0] - lw) // 2
         draw.text((x, y), line, font=font, fill=(255, 255, 255, 255))
         y += lh + line_gap
 
-    return Image.alpha_composite(im, overlay).convert("RGB")
+    return overlay
+
+
+def crop_to_oversized_frame(im: Image.Image, oversize: float = 1.15) -> Image.Image:
+    """Crop/resize to FRAME_SIZE's aspect ratio but oversized, so zoompan
+    has room to pan without ever showing empty space at the edges."""
+    target_w = int(FRAME_SIZE[0] * oversize)
+    target_h = int(FRAME_SIZE[1] * oversize)
+    target_ratio = target_w / target_h
+    w, h = im.size
+    ratio = w / h
+    if ratio > target_ratio:
+        new_w = int(h * target_ratio)
+        x0 = (w - new_w) // 2
+        im = im.crop((x0, 0, x0 + new_w, h))
+    else:
+        new_h = int(w / target_ratio)
+        y0 = (h - new_h) // 2
+        im = im.crop((0, y0, w, y0 + new_h))
+    return im.resize((target_w, target_h), Image.LANCZOS)
+
+
+FPS = 30
+
+
+def render_shot_clip(
+    *, source_path: Path, caption_text: str, duration: float, clip_path: Path, zoom_out: bool
+) -> None:
+    im = Image.open(source_path).convert("RGB")
+    im = crop_to_oversized_frame(im)
+    bg_path = clip_path.with_suffix(".bg.jpg")
+    im.save(bg_path, quality=95)
+
+    caption_path = clip_path.with_suffix(".caption.png")
+    caption_layer(caption_text).save(caption_path)
+
+    nframes = max(1, round(duration * FPS))
+    ow, oh = im.size
+    # Zoom between 1.0 and ~1.12 across the shot; ping-pong direction per
+    # shot for a little variety instead of every shot zooming the same way.
+    per_frame = 0.12 / nframes
+    if zoom_out:
+        zoom_expr = f"if(eq(on,1),1.12,zoom-{per_frame:.6f})"
+    else:
+        zoom_expr = f"min(zoom+{per_frame:.6f},1.12)"
+
+    filter_complex = (
+        f"[0:v]scale={ow}:{oh},zoompan=z='{zoom_expr}':"
+        f"x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s={FRAME_SIZE[0]}x{FRAME_SIZE[1]}:fps={FPS}[bg];"
+        f"[bg][1:v]overlay=0:0:shortest=1[out]"
+    )
+
+    subprocess.run(
+        [
+            "ffmpeg", "-y",
+            "-loop", "1", "-i", str(bg_path),
+            "-loop", "1", "-i", str(caption_path),
+            "-filter_complex", filter_complex,
+            "-map", "[out]",
+            "-t", str(duration),
+            "-r", str(FPS),
+            "-pix_fmt", "yuv420p",
+            "-c:v", "libx264",
+            str(clip_path),
+        ],
+        check=True,
+        capture_output=True,
+    )
 
 
 def render(*, brief_pack: dict, out_dir: Path) -> dict:
@@ -102,11 +171,10 @@ def render(*, brief_pack: dict, out_dir: Path) -> dict:
     assets_state = {a["id"]: a for a in brief_pack["assets"]}
 
     out_dir.mkdir(parents=True, exist_ok=True)
-    frames_dir = out_dir / "frames"
-    frames_dir.mkdir(exist_ok=True)
+    clips_dir = out_dir / "clips"
+    clips_dir.mkdir(exist_ok=True)
 
-    frame_paths = []
-    concat_lines = []
+    clip_paths = []
     for i, shot in enumerate(brief["shots"]):
         check_claims(shot["overlay"], profile)
         asset_id = shot["asset_ids"][0]
@@ -118,25 +186,24 @@ def render(*, brief_pack: dict, out_dir: Path) -> dict:
         if actual != asset["sha256"]:
             raise SystemExit(f"checksum drift on {asset_id}; refuse to render")
 
-        im = Image.open(source_path).convert("RGB")
-        im = crop_to_frame(im)
-        im = draw_caption(im, shot["overlay"])
-        frame_path = frames_dir / f"frame{i}.jpg"
-        im.save(frame_path, quality=92)
-        frame_paths.append(frame_path)
         duration = shot["end"] - shot["start"]
-        concat_lines.append(f"file '{frame_path.name}'\nduration {duration}\n")
-    # ffconcat requires the last file repeated without a duration line.
-    concat_lines.append(f"file '{frame_paths[-1].name}'\n")
+        clip_path = clips_dir / f"shot{i}.mp4"
+        render_shot_clip(
+            source_path=source_path,
+            caption_text=shot["overlay"],
+            duration=duration,
+            clip_path=clip_path,
+            zoom_out=(i % 2 == 1),
+        )
+        clip_paths.append(clip_path)
 
-    concat_path = frames_dir / "concat.txt"
-    concat_path.write_text("".join(concat_lines))
+    concat_path = clips_dir / "concat.txt"
+    concat_path.write_text("".join(f"file '{p.name}'\n" for p in clip_paths))
 
     video_path = out_dir / "pinterest-pin.mp4"
     subprocess.run(
         [
             "ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", str(concat_path),
-            "-vf", "fps=30,format=yuv420p",
             "-c:v", "libx264", "-pix_fmt", "yuv420p", "-movflags", "+faststart",
             str(video_path),
         ],
@@ -145,12 +212,12 @@ def render(*, brief_pack: dict, out_dir: Path) -> dict:
     )
 
     result = {
-        "engine": "local (Pillow + ffmpeg)",
+        "engine": "local (Pillow + ffmpeg, Ken Burns zoom per shot)",
         "reason": "Blotato Image Slideshow with Text Overlays template was broken as of 2026-09-08 (blank captions, no mediaUrl)",
         "credits_spent": 0,
         "video_path": str(video_path.relative_to(REPO_ROOT)),
         "video_checksum_sha256": br.hash_file(video_path),
-        "frame_paths": [str(p.relative_to(REPO_ROOT)) for p in frame_paths],
+        "clip_paths": [str(p.relative_to(REPO_ROOT)) for p in clip_paths],
         "duration_seconds": brief["duration_seconds"],
     }
     (out_dir / "result.json").write_text(json.dumps(result, indent=2, sort_keys=True))
