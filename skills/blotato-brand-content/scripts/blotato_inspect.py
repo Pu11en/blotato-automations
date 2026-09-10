@@ -11,9 +11,9 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import blotato_api as api
-import blotato_run as br
+sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+from scripts.blotato import api as api
+from scripts.blotato import runner as br
 
 
 def load_env(env_path: Path) -> dict:

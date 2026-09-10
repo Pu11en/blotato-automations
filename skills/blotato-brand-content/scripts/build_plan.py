@@ -9,8 +9,8 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import blotato_run as br
+sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+from scripts.blotato import runner as br
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 TEMPLATE_ID = "f524614b-ba01-448c-967a-ce518c52a700"  # Product Scene Placement
