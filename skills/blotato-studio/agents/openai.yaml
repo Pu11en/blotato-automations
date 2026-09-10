@@ -1,0 +1,4 @@
+interface:
+  display_name: "Blotato Studio"
+  short_description: "Catalog-driven image/video generation through Blotato"
+  default_prompt: "Use $blotato-studio to list available Blotato techniques, plan one against real media, and run it with an explicit credit ceiling and approval."
