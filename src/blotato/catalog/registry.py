@@ -1,7 +1,12 @@
 """Auto-discovers every template module under catalog/templates/ and
 exposes them as one registry, keyed by our catalog id (not Blotato's
 templateId, which can be a long UUID or path -- our ids are short and
-stable even if Blotato reshuffles internal ids)."""
+stable even if Blotato reshuffles internal ids).
+
+A module contributes either a single `ENTRY` or an `ENTRIES` iterable, so a
+family of templates that differ only by id and label (Blotato ships 20
+infographic styles with identical inputs) stays one file instead of 20
+near-identical ones."""
 from __future__ import annotations
 
 import importlib
@@ -20,14 +25,16 @@ def _discover() -> dict:
     registry = {}
     for module_info in pkgutil.iter_modules(_templates_pkg.__path__):
         module = importlib.import_module(f"{_templates_pkg.__name__}.{module_info.name}")
-        entry = getattr(module, "ENTRY", None)
-        if entry is None:
-            continue
-        if not isinstance(entry, ModelEntry):
-            raise TypeError(f"{module.__name__}.ENTRY must be a ModelEntry")
-        if entry.id in registry:
-            raise ValueError(f"duplicate catalog id: {entry.id}")
-        registry[entry.id] = entry
+        entries = getattr(module, "ENTRIES", None)
+        if entries is None:
+            single = getattr(module, "ENTRY", None)
+            entries = () if single is None else (single,)
+        for entry in entries:
+            if not isinstance(entry, ModelEntry):
+                raise TypeError(f"{module.__name__} exported a non-ModelEntry: {entry!r}")
+            if entry.id in registry:
+                raise ValueError(f"duplicate catalog id: {entry.id}")
+            registry[entry.id] = entry
     return registry
 
 

@@ -71,6 +71,14 @@ def build_plan(
 
     if not prompt or not prompt.strip():
         raise ValueError("prompt must not be empty")
+    if model.prompt_min_length is not None and len(prompt) < model.prompt_min_length:
+        raise ValueError(
+            f"{model.id} needs a prompt of at least {model.prompt_min_length} characters; got {len(prompt)}"
+        )
+    if model.prompt_max_length is not None and len(prompt) > model.prompt_max_length:
+        raise ValueError(
+            f"{model.id} accepts at most {model.prompt_max_length} prompt characters; got {len(prompt)}"
+        )
     _validate_settings(model, settings)
 
     for role, (lo, hi) in model.roles.items():

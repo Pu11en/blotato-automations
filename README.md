@@ -80,20 +80,26 @@ It exits non-zero rather than spending credits when:
 
 `BLOTATO_API_KEY` is read from the environment only, never accepted as an argument, and redacted from everything written to disk.
 
-## The catalog is small and honest
+## The catalog says what is actually proven
 
 ```
 $ blotato list
-ai-video-with-ai-voice         video  unverified          AI Video with AI Voice
-image-slideshow-text-overlays  video  BROKEN              Image Slideshow with Text Overlays
-product-scene-placement        image  verified 2026-09-08  Product Scene Placement
+ai-video-with-ai-voice       video  verified 2026-09-26  ~45 cr        AI Video with AI Voice
+infographic-newspaper        image  verified 2026-09-26  ~50 cr        Newspaper Infographic
+infographic-steampunk        image  unverified          cost unknown   Steampunk Infographic
+image-slideshow-text-overlays video BROKEN              cost unknown   Image Slideshow with Text Overlays
+...
 ```
 
-- **verified `<date>`** — we submitted it live and confirmed what it actually does.
-- **unverified** — the schema came from Blotato's template listing; never submitted.
+23 techniques, of which 5 have been submitted live and inspected.
+
+- **verified `<date>`** — we ran it and looked at the output. `observed cost` is what that run actually charged, measured from the balance before and after, not a published price list.
+- **unverified** — the schema came from Blotato's live template listing, so a plan will be structurally valid, but nobody has looked at what it renders.
 - **BROKEN** — we ran it and it does not work as documented. `submit` refuses it.
 
-Never trust a template because its Blotato-side description sounds right. Only `verified_at` means anything. Growing this catalog is the main way to make the tool more useful — see below.
+`blotato show <id>` prints what a live run actually revealed. Those notes are observations, not guesses — for example the Breaking News style invents a broadcaster and a photorealistic anchor, and rendered a QR code that encodes nothing.
+
+**Twenty of the entries are one family**: Blotato ships 20 infographic styles that share an identical contract (a 10–500 char description, a 2–100 char footer CTA, no reference media, one image out). They live in a single `catalog/templates/infographics.py`, because the registry accepts an `ENTRIES` tuple as well as a single `ENTRY`.
 
 ### Adding a technique
 
@@ -113,7 +119,7 @@ src/blotato/          the installable package — this is the tool
   schemas/              JSON schemas shipped as package data
 skills/blotato-studio/  Claude Code skill wrapping the CLI
 docs/                   how to operate what is implemented
-tests/                  104 tests, no network, no credits
+tests/                  124 tests, no network, no credits
 lab/                    research notes and past experiments — not shipped
 openspec/               change proposals (historical record)
 ```

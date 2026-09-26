@@ -55,6 +55,10 @@ class ModelEntry:
     known_issues: tuple = ()
     broken: bool = False
     verified_at: Optional[str] = None
+    prompt_min_length: Optional[int] = None
+    prompt_max_length: Optional[int] = None
+    # Credits a live run actually cost us, not a published price list.
+    observed_credits: Optional[float] = None
 
     @property
     def is_known_broken(self) -> bool:
