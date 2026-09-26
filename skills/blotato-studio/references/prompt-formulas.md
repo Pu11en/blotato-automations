@@ -22,4 +22,4 @@ A professional product photograph of the product {placement}, {background}, {lig
 
 ## Caption/on-screen-text formula (source: this repo's own live research)
 
-For any technique whose output will be watched muted (Pinterest research in `brands/cinco-h-ranch/pinterest-research/` found ~85% of Pinterest viewers watch without sound): keep captions short (one sentence, under ~12 words per screen), high-contrast against a solid band (not directly over busy photo detail), and never depend on audio to carry the core message.
+For any technique whose output will be watched muted (our own Pinterest research run found ~85% of Pinterest viewers watch without sound): keep captions short (one sentence, under ~12 words per screen), high-contrast against a solid band (not directly over busy photo detail), and never depend on audio to carry the core message.

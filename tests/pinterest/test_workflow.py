@@ -2,15 +2,16 @@ import copy
 import json
 import os
 import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch, Mock
 from urllib.error import HTTPError
-from scripts.pinterest import adapters, content, research, results
-from scripts.pinterest.core import ROOT, Invalid, atomic, read, digest, validate, load_run
+from blotato.workflows.pinterest import adapters, content, research, results
+from blotato.workflows.pinterest.core import Invalid, atomic, read, digest, validate, load_run
 
-F=ROOT/'tests/pinterest/fixtures'
+F=Path(__file__).resolve().parent/'fixtures'
 
 class WorkflowTests(unittest.TestCase):
     def setUp(self):
@@ -194,8 +195,8 @@ class WorkflowTests(unittest.TestCase):
 
     def test_live_checkpoints_survive_final_write_interruption(self):
         target=self.d.parent/'live'
-        with patch('scripts.pinterest.adapters.opencli',return_value=read(F/'opencli.json')) as pins, patch('scripts.pinterest.adapters.fetch_trends',side_effect=adapters.Unavailable('not configured')) as trends:
-            with patch('scripts.pinterest.research.save_run',side_effect=OSError('interrupted')):
+        with patch('blotato.workflows.pinterest.adapters.opencli',return_value=read(F/'opencli.json')) as pins, patch('blotato.workflows.pinterest.adapters.fetch_trends',side_effect=adapters.Unavailable('not configured')) as trends:
+            with patch('blotato.workflows.pinterest.research.save_run',side_effect=OSError('interrupted')):
                 with self.assertRaises(OSError):research.collect(target,F/'profile.json','live',live=True)
             self.assertEqual(pins.call_count,3)
             research.collect(target,F/'profile.json','live',live=True)
@@ -204,7 +205,7 @@ class WorkflowTests(unittest.TestCase):
 
     def test_csv_import_and_utc_timestamp(self):
         import csv
-        from scripts.pinterest.core import records
+        from blotato.workflows.pinterest.core import records
         self.register()
         row=read(F/'results.json')[0];row['extracted_at']='2026-08-09T00:00:00Z'
         file=self.d/'input.csv'
@@ -223,7 +224,7 @@ class WorkflowTests(unittest.TestCase):
         self.assertEqual(data['pinterest_trends']['status'],'unverified')
 
     def test_cli_from_unrelated_directory(self):
-        p=subprocess.run(['python3',str(ROOT/'scripts/pinterest/cli.py'),'doctor'],cwd='/tmp',capture_output=True,text=True)
+        p=subprocess.run([sys.executable,'-m','blotato.workflows.pinterest','doctor'],cwd=tempfile.gettempdir(),capture_output=True,text=True)
         self.assertEqual(p.returncode,0,p.stderr)
         self.assertEqual(json.loads(p.stdout)['paid_calls'],0)
 

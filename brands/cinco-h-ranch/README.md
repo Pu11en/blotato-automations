@@ -1,7 +1,0 @@
-# Cinco H Ranch Naturals brand profile
-
-`profile.json` and `claims.json` together form one logical brand profile validated against `schemas/brand-profile.schema.json`: merge `claims.json`'s `claims` object into `profile.json` under the `claims` key before validating or loading. They are kept as separate files so the claims firewall can be reviewed and changed independently of identity/facts/assets.
-
-Sourced from `research/cinco-h-ranch-brand-audit.md` (audit snapshot 2026-09-08). Every fact and claim traces to a first-party URL from that audit; nothing here paraphrases the audit's Tier 3 / claim-risk-inventory language into an approved phrase.
-
-`profile.json`'s `assets` array currently holds three real files under `assets/`, downloaded 2026-09-08 directly from the brand's own live product pages (Wix media CDN) at the brand operator's direction: the homepage emblem and two product photos (one carries iPhone EXIF confirming original capture). Their `checksum_sha256` values are verified against the files by `tests/blotato_brand_content/test_cinco_profile.py`. This is still a small starter set, not the full source pack — per the audit's "What a future system should ingest from the owner" section, adding more SKUs, phone clips, and label art later should follow the same pattern: real file, real checksum, honest `provenance`/`rights`. Never fabricate a placeholder asset to unblock a run.

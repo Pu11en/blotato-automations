@@ -1,111 +1,123 @@
-# Blotato Automations Lab
+# blotato-automations
 
-This repository is an experiment lab for making content people actually want to watch, then using Blotato to produce, publish, measure, and improve it.
+A command-line tool for generating images and videos through the [Blotato](https://blotato.com) API.
 
-The goal is not maximum posting volume. The goal is to discover repeatable content formats that earn attention and only then automate them.
+Pick a technique from a catalog, build a plan for free, approve a credit ceiling, then spend credits on exactly one bounded call. Nothing here publishes, schedules, or touches a social account.
 
-## Operating model
+## Quickstart
 
-```text
-Audience signal -> content hypothesis -> small batch -> human review
-       ^                                      |
-       |                                      v
-performance notes <- platform analytics <- publish with Blotato
+```bash
+git clone https://github.com/Pu11en/blotato-automations.git
+cd blotato-automations
+python -m pip install -e .
 ```
 
-Every automation should preserve these stages:
+Set your key (either works; an exported variable wins over the file):
 
-1. **Research:** collect real audience questions, pain points, trends, or proven source material.
-2. **Create:** turn one insight into a native post, carousel, or short video.
-3. **Review:** require approval until the format has repeatedly met its quality bar.
-4. **Distribute:** adapt the idea for each platform instead of blindly duplicating one caption everywhere.
-5. **Learn:** record views, retention when available, saves, shares, comments, and the creative variables that produced them.
+```bash
+export BLOTATO_API_KEY=...        # or put BLOTATO_API_KEY=... in <workspace>/.env
+blotato balance                   # free: confirms the key works
+```
 
-## Repository map
+Then, from **any** directory you want to work in:
 
-- `research/` — current Blotato capabilities, official documentation, and evaluated community workflows
-- `experiments/` — one folder per content hypothesis, including its brief, workflow, outputs, and results
-- `workflows/` — reusable n8n, Make, MCP, or API workflows that passed an experiment
-- `templates/` — prompts, review checklists, schemas, and platform adapters
-- `assets/` — stable input assets used by experiments (never temporary clipboard files)
-- `scripts/` — small API utilities and validation tools
+```bash
+# 1. see what techniques exist, and which are actually proven
+blotato list
 
-## Recommended first build
+# 2. build a plan — free, offline, spends nothing
+blotato plan \
+  --model product-scene-placement \
+  --prompt "The soap bar on a sunlit rustic wooden shelf, shallow depth of field." \
+  --reference assets/product.jpg \
+  --out plan.json
 
-Start with a **human-approved content lab**, not a fully autonomous content factory:
+# 3. a human sets the spend ceiling — this step is deliberately not automated
+blotato approve plan.json --max-credits 25 --reference "me, 2026-09-26"
 
-1. Submit a topic, link, transcript, or raw idea.
-2. Extract the strongest audience-relevant insight.
-3. Generate three hooks and one finished content asset.
-4. Preview it and explicitly approve, revise, or reject it.
-5. Publish to one primary platform and optionally adapt it to one secondary platform.
-6. Capture results after fixed intervals and log what changed.
+# 4. spend credits on one call, poll it, download the result
+blotato submit plan.json
+```
 
-This is small enough to diagnose. Once one format wins consistently, move its approved workflow into `workflows/` and increase automation gradually.
+`submit` writes everything it did to `outputs/blotato-studio-runs/<digest>/` — the plan, the sanitized request, the poll log, the observed credit delta, and the downloaded media with its checksum.
 
-The complete proposed infrastructure, channel-isolation rules, module interfaces, experiment design, and delivery phases are in [`docs/infrastructure-plan.md`](docs/infrastructure-plan.md).
+## Commands
 
-The recommended initial audience, content pillars, workflow to adapt, and first 12-post test are in [`docs/ai-builder-content-system.md`](docs/ai-builder-content-system.md).
+| Command | Cost | What it does |
+|---|---|---|
+| `blotato list` | free, offline | Every catalog technique with its honest status |
+| `blotato show <id>` | free, offline | One technique's media roles, settings, known issues |
+| `blotato balance` | free | Credit balance and account email |
+| `blotato inspect` | free | Snapshots Blotato's live template catalog to `outputs/` |
+| `blotato plan` | free, offline | Validates inputs, checksums local assets, writes `plan.json` |
+| `blotato approve` | free | Records a human's credit ceiling and approval reference |
+| `blotato submit` | **spends credits** | One bounded call, polled to completion, downloaded |
+| `blotato pinterest …` | free | Local Pinterest research workflow (no publishing, no paid calls) |
 
-The paid-tool restriction, reference-media rules, and mandatory workflow/output audit are in [`docs/tooling-and-output-policy.md`](docs/tooling-and-output-policy.md).
+## Where files come from and go
 
-The current evidence for exact assets, image references, consistent characters, Brand Kit behavior, and required live tests is in [`research/blotato-reference-media.md`](research/blotato-reference-media.md).
+Relative paths resolve against a **workspace** directory: `$BLOTATO_WORKSPACE`, else the directory you ran the command from. Override per-invocation with `--workspace`. Absolute asset paths always work as given. Outputs go to `<workspace>/outputs/`.
 
-The current Blotato image, video, voice, and text-model catalog—with credit costs and outside-key exclusions—is in [`research/blotato-model-catalog.md`](research/blotato-model-catalog.md).
+You do not have to work inside this checkout — that is the point of installing it.
 
-The evidence-ranked public output gallery, generation-versus-publishing distinctions, and quality verdict are in [`research/public-blotato-output-examples.md`](research/public-blotato-output-examples.md).
+## What `submit` refuses to do
 
-The real-user scan across the local Twitter/X and Reddit scrapers—including production accounts, direct outputs, and rejected promotional claims—is in [`research/real-user-blotato-reddit.md`](research/real-user-blotato-reddit.md).
+It exits non-zero rather than spending credits when:
 
-The first-party website, catalog, brand-story, social-footprint, and claims-risk audit for Cinco H Ranch Naturals is in [`research/cinco-h-ranch-brand-audit.md`](research/cinco-h-ranch-brand-audit.md).
+- the catalog marks the technique `broken`
+- there is no positive `max_credits_ceiling`
+- there is no recorded approval reference and timestamp
+- the current balance is below the ceiling
+- a local asset's checksum drifted between `plan` and `submit`
+- the request body contains a publishing, scheduling, social-account, or third-party-credential field
 
-The proposed real-ranch content strategy, claims firewall, six-video test, and Blotato production loop for Cinco H Ranch Naturals are in [`docs/cinco-h-ranch-content-pipeline.md`](docs/cinco-h-ranch-content-pipeline.md).
+`BLOTATO_API_KEY` is read from the environment only, never accepted as an argument, and redacted from everything written to disk.
 
-The implementation-ready plan for the reusable, approval-gated Blotato brand automation skill is in [`openspec/changes/add-blotato-brand-automation-skill/`](openspec/changes/add-blotato-brand-automation-skill/).
+## The catalog is small and honest
 
-## First three experiments
+```
+$ blotato list
+ai-video-with-ai-voice         video  unverified          AI Video with AI Voice
+image-slideshow-text-overlays  video  BROKEN              Image Slideshow with Text Overlays
+product-scene-placement        image  verified 2026-09-08  Product Scene Placement
+```
 
-1. **Evidence-backed carousel** — turn a useful source into a concise tutorial carousel.
-2. **Short-form explainer** — one strong hook, one idea, visual progression, and a clear payoff.
-3. **Proven-content repurpose** — transform your own existing high-performing material into a platform-native variation.
+- **verified `<date>`** — we submitted it live and confirmed what it actually does.
+- **unverified** — the schema came from Blotato's template listing; never submitted.
+- **BROKEN** — we ran it and it does not work as documented. `submit` refuses it.
 
-Avoid beginning with generic news summaries, quote cards, or unattended AI-avatar volume. They are easy to automate but weak tests of whether an audience genuinely wants the content.
+Never trust a template because its Blotato-side description sounds right. Only `verified_at` means anything. Growing this catalog is the main way to make the tool more useful — see below.
 
-## Setup order
+### Adding a technique
 
-1. Read [`research/blotato-landscape.md`](research/blotato-landscape.md) and choose the first workflow to test.
-2. Connect only the social account(s) needed for that test in Blotato.
-3. Create a Blotato API key and store it in a local `.env`; never commit credentials.
-4. Pick one orchestration path:
-   - **MCP** for interactive experiments controlled through an AI agent.
-   - **n8n** for reusable visual workflows, approvals, schedules, retries, and logging.
-   - **REST API** for version-controlled custom code and tests.
-   - **Make** only if that is already the preferred automation environment.
-5. Import or clone one evaluated workflow before designing a new one.
-6. Run with drafts or a private/test account first; enable unattended publishing only after validation.
+One small file in `src/blotato/catalog/templates/`, modelled on `product_scene_placement.py`. It declares the real Blotato template id (get it from `blotato inspect`), which media roles it needs, and a `build_inputs()` that maps the generic plan onto that template's input shape. Leave `verified_at = None` until you have actually submitted it and looked at the output. Record what you observed in `known_issues` — `image_slideshow_text_overlays.py` shows how a live-discovered bug gets encoded so nobody burns credits rediscovering it.
 
-## Quality gate
+The architecture follows the open-source [`open-higgsfield`](https://github.com/wide-trace/open-higgsfield) project (MIT), with Blotato as the only backend.
 
-A piece should not publish unless it passes all of these:
+## Layout
 
-- It serves a named audience and a specific need.
-- The opening earns attention without making a false promise.
-- It contains an original observation, useful synthesis, or real example.
-- The format fits the destination platform.
-- Claims are traceable to sources.
-- Visuals and voice feel coherent rather than template-generated.
-- The call to action follows naturally from the value delivered.
+```
+src/blotato/          the installable package — this is the tool
+  cli.py                the `blotato` command
+  api.py  runner.py     HTTP client, credit guardrails, redaction, validation
+  catalog/              one file per technique
+  studio/               plan.py (free) and submit.py (spends credits)
+  workflows/pinterest/  local Pinterest research workflow
+  schemas/              JSON schemas shipped as package data
+skills/blotato-studio/  Claude Code skill wrapping the CLI
+docs/                   how to operate what is implemented
+tests/                  87 tests, no network, no credits
+lab/                    research notes and past experiments — not shipped
+openspec/               change proposals (historical record)
+```
 
-## Experiment record
+## Development
 
-Create each experiment from [`templates/experiment.md`](templates/experiment.md). Change only one or two major creative variables per batch so the outcome teaches us something.
+```bash
+python -m pip install -e ".[dev]"
+python -m pytest tests -q
+```
 
-## Security and cost rules
+Tests are offline and hermetic: no network, no credits, no fixtures that depend on any particular brand's data. They pass on Windows, macOS and Linux.
 
-- Keep API keys and account IDs out of Git.
-- Treat imported community workflows as untrusted code until reviewed.
-- Put explicit approval before publishing and before expensive generation calls.
-- Cap retries and polling loops; Blotato creation operations are asynchronous.
-- Log request IDs and terminal status so failed jobs are observable and not accidentally duplicated.
-
-The implemented local Pinterest research, creative brief and experiment-reporting workflow is documented in [`docs/pinterest-workflow.md`](docs/pinterest-workflow.md). Live account connections are separate readiness checks.
+`Pillow` is only needed for the optional local (zero-credit) video renderer: `pip install -e ".[render]"`.
