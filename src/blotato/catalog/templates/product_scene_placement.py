@@ -32,11 +32,18 @@ ENTRY = ModelEntry(
         "sceneDescription": SettingField(kind="text", default="", min_length=10, max_length=500),
     },
     build_inputs=build_inputs,
+    observed_credits=50,
+    cost_note="Measured twice on 2026-09-19 from the live balance (youtube-money).",
     known_issues=(
+        "Always returns a 4:5 JPEG regardless of the filename or any requested "
+        "ratio -- there is no aspect-ratio input on this template.",
         "Regenerates the product rather than preserving exact pixels -- verified "
         "2026-09-08 to shift color/edges versus the real source photo. Route every "
         "output through human review before treating it as an approved brand asset; "
-        "never label it 'exact-asset'.",
+        "never label it 'exact-asset'. Independently reproduced on 2026-09-19: a "
+        "logo's wide flat dome came back a tall horseshoe, twice, even with a prompt "
+        "demanding the outline be kept. Fine for backgrounds and mood frames; never "
+        "for a logo, badge, watermark, or a character that must persist.",
     ),
     verified_at="2026-09-08",
 )

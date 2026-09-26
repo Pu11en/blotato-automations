@@ -7,7 +7,7 @@ Adding a new technique is one small file, not a new script.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from typing import Callable, Literal, Optional
 
 Surface = Literal["image", "video"]
@@ -59,7 +59,15 @@ class ModelEntry:
     prompt_max_length: Optional[int] = None
     # Credits a live run actually cost us, not a published price list.
     observed_credits: Optional[float] = None
+    # Set when one number cannot describe the cost (e.g. free with uploaded
+    # media, charged per generated scene).
+    cost_note: Optional[str] = None
+    # Which package contributed this entry; the registry fills it in.
+    origin: str = "blotato"
 
     @property
     def is_known_broken(self) -> bool:
         return self.broken
+
+    def with_origin(self, origin: str) -> "ModelEntry":
+        return self if self.origin == origin else replace(self, origin=origin)

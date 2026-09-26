@@ -1,7 +1,12 @@
 """Blotato template: AI Video with AI Voice (video).
 
 Multi-scene narrated video. Each scene is an image plus a line of script
-that gets read aloud, and Blotato burns in captions.
+that gets read aloud, and Blotato burns in captions. This is the backbone
+template -- one call covers image-to-clip, text-to-clip, voiceover and
+captions, for 1-20 scenes.
+
+Cost follows where the pictures come from, not the feature list: uploaded
+scenes are free, generated ones are charged. See `cost_note`.
 
 A scene's `mediaSource` accepts **either** a media URL **or** a plain text
 image prompt -- the live template listing's own default uses prompts ("A
@@ -27,6 +32,8 @@ from ..types import GenerationPlane, ModelEntry, SettingField
 SCENE_SEPARATOR = "---"
 SCRIPT_SEPARATOR = "::"
 
+# The full string is required. A bare "Brian" is rejected with HTTP 422
+# (free -- it fails before any spend).
 VOICES = (
     "Alice (British, confident)",
     "Aria (American, expressive)",
@@ -34,6 +41,20 @@ VOICES = (
     "Brian (American, deep)",
     "Callum (Transatlantic, intense)",
     "Charlie (Australian, natural)",
+    "Charlotte (Swedish, seductive)",
+    "Chris (American, casual)",
+    "Daniel (British, authoritative)",
+    "Eric (American, friendly)",
+    "George (British, warm)",
+    "Jessica (American, expressive)",
+    "Laura (American, upbeat)",
+    "Liam (American, articulate)",
+    "Lily (British, warm)",
+    "Matilda (American, friendly)",
+    "River (American, confident)",
+    "Roger (American, confident)",
+    "Sarah (American, soft)",
+    "Will (American, friendly)",
 )
 
 IMAGE_MODELS = (
@@ -112,12 +133,25 @@ ENTRY = ModelEntry(
         "Voiceover length drives duration: the 2026-09-26 run rendered 3 scenes as an "
         "11.5s 1080x1920 clip with trimToVoiceover on, so scene count alone does not "
         "predict length -- script length does.",
-        "Scene images are generated, not sourced. Nothing in the output is a real "
-        "photograph of anything, even when the prompt names a real place or product.",
+        "A scene generated from a text prompt is a generated image, not a photograph "
+        "of anything real, even when the prompt names a real place or product. Upload "
+        "the real asset as a reference scene when the thing must be itself.",
+        "Generated stills come back wide and get letterboxed into a 9:16 frame "
+        "(observed 2026-09-19). Uploaded stills are reproduced exactly.",
+        "voiceName must be the full string, e.g. 'Brian (American, deep)'. A bare "
+        "'Brian' is rejected with HTTP 422 before any spend.",
     ),
     broken=False,
-    # Live run 2026-09-26: 3 prompt-driven scenes, no uploaded media, voiceover on.
-    # Returned a 17 MB mp4, 11.46s, 1080x1920, with both a video and an audio track.
+    # Live runs: 2026-09-26 here (3 generated, un-animated scenes -> 45 credits total,
+    # a 17 MB mp4, 11.46s, 1080x1920, video + audio tracks) and 2026-09-19 in
+    # youtube-money (uploaded scenes -> 0; generated + animated -> ~70 per scene).
     verified_at="2026-09-26",
-    observed_credits=45,
+    observed_credits=0,
+    cost_note=(
+        "Two very different prices in one template. Scenes whose mediaSource is an "
+        "UPLOADED image or video cost 0 -- voice, captions and the Ken Burns zoom are "
+        "all free. Scenes generated from a text prompt are charged: ~15 each "
+        "un-animated (3 scenes = 45 credits, 2026-09-26) and ~70 each with "
+        "animateAiImages on (2026-09-19). So: pay for stills once, then assemble free."
+    ),
 )

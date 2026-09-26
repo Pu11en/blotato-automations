@@ -32,7 +32,10 @@ def _status(model) -> str:
 
 
 def _cost(model) -> str:
-    return f"~{model.observed_credits:g} cr" if model.observed_credits else "cost unknown"
+    if model.observed_credits is None:
+        return "cost unknown"
+    suffix = "*" if model.cost_note else ""
+    return f"~{model.observed_credits:g} cr{suffix}"
 
 
 def _media_item(value: str) -> dict:
@@ -79,6 +82,8 @@ def cmd_list(args) -> int:
                 "broken": m.broken,
                 "verified_at": m.verified_at,
                 "observed_credits": m.observed_credits,
+                "cost_note": m.cost_note,
+                "origin": m.origin,
                 "roles": {role: list(counts) for role, counts in m.roles.items()},
                 "settings": sorted(m.settings),
                 "known_issues": list(m.known_issues),
@@ -103,8 +108,10 @@ def cmd_show(args) -> int:
     print(f"  {model.label}")
     print(f"\n{model.description}\n")
     print(f"blotato template id: {model.blotato_template_id}")
-    if model.observed_credits:
+    if model.observed_credits is not None:
         print(f"observed cost: {model.observed_credits:g} credits (measured, not a price list)")
+    if model.cost_note:
+        print(f"cost note: {model.cost_note}")
     if model.prompt_min_length or model.prompt_max_length:
         print(f"prompt length: {model.prompt_min_length or 0}-{model.prompt_max_length or 'unbounded'} characters")
     print("media roles:")

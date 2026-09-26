@@ -32,10 +32,19 @@ class CatalogTest(unittest.TestCase):
             )
 
     def test_live_verified_entries_record_what_a_run_cost(self):
+        # 0 is a real measurement, not a missing one: ai-video-with-ai-voice
+        # costs nothing when every scene uses uploaded media.
         for model_id in ("ai-video-with-ai-voice", "infographic-newspaper"):
             model = get_model(model_id)
             self.assertEqual(model.verified_at, "2026-09-26", model_id)
-            self.assertTrue(model.observed_credits, model_id)
+            self.assertIsNotNone(model.observed_credits, model_id)
+
+    def test_a_zero_cost_entry_explains_itself(self):
+        for model in list_models():
+            if model.observed_credits == 0:
+                self.assertTrue(
+                    model.cost_note, f"{model.id} claims to be free without saying when"
+                )
 
     def test_unknown_id_raises(self):
         with self.assertRaises(UnknownModelError):

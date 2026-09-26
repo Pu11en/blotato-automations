@@ -1,8 +1,16 @@
 # blotato-automations
 
-A command-line tool for generating images and videos through the [Blotato](https://blotato.com) API.
+The shared Blotato layer: a Python package and a CLI for generating images and videos through the [Blotato](https://blotato.com) API.
 
 Pick a technique from a catalog, build a plan for free, approve a credit ceiling, then spend credits on exactly one bounded call. Nothing here publishes, schedules, or touches a social account.
+
+**Other projects depend on this rather than writing their own client.** They get the capabilities plus the guardrails, and can contribute their own techniques without forking — see [`docs/using-from-another-project.md`](docs/using-from-another-project.md).
+
+```toml
+dependencies = [
+    "blotato-automations @ git+https://github.com/Pu11en/blotato-automations@main",
+]
+```
 
 ## Quickstart
 
@@ -56,6 +64,8 @@ If a job is still rendering when the poll timeout expires, the credits are alrea
 | `blotato submit` | **spends credits** | One bounded call, polled to completion, downloaded |
 | `blotato poll <run-dir>` | free | Resumes an already-paid-for run: finishes polling, downloads its media |
 | `blotato pinterest …` | free | Local Pinterest research workflow (no publishing, no paid calls) |
+
+`blotato list` shows every technique this account can reach, including any contributed by other installed packages. `~0 cr*` means the cost depends on how you use it — `blotato show <id>` explains.
 
 ## Where files come from and go
 
