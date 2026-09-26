@@ -16,6 +16,7 @@ from . import api, inspect as inspect_mod, runner as br
 from .catalog import UnknownModelError, get_model, list_models
 from .digest import verify_plan_digest
 from .download import DownloadTooLarge
+from .ledger import BudgetExceeded, entries as ledger_entries, spent
 from .studio.plan import build_plan
 from .studio.submit import poll, submit
 from .workspace import load_env
@@ -210,11 +211,31 @@ def cmd_submit(args) -> int:
     result = submit(
         Path(args.plan),
         workspace=args.workspace,
+        run=args.run,
+        budget=args.budget,
         poll_interval=args.poll_interval,
         poll_timeout=args.poll_timeout,
     )
     print(json.dumps(result, indent=2))
     return 0 if result.get("final_status") == "done" else 1
+
+
+def cmd_spent(args) -> int:
+    rows = ledger_entries(run=args.run, workspace=args.workspace)
+    total = spent(run=args.run, workspace=args.workspace)
+    if args.json:
+        print(json.dumps({"run": args.run, "calls": len(rows), "credits": total, "entries": rows}, indent=2))
+        return 0
+    if not rows:
+        print("no paid calls recorded" + (f" for run {args.run!r}" if args.run else ""))
+        return 0
+    for row in rows:
+        delta = row.get("credits_observed_delta")
+        shown = f"{delta:g}" if delta is not None else f"~{row.get('assumed_credits') or 0:g} (unmeasured)"
+        print(f"{row['at']}  {str(row.get('run') or '-'):<16}  {shown:>18}  {row['model_id']}")
+    label = f" for run {args.run!r}" if args.run else " across all runs"
+    print(f"\n{len(rows)} paid call(s), {total:g} credits{label}.")
+    return 0
 
 
 def cmd_poll(args) -> int:
@@ -290,9 +311,19 @@ def build_parser() -> argparse.ArgumentParser:
 
     p = sub.add_parser("submit", help="SPENDS CREDITS: run one approved plan")
     p.add_argument("plan")
+    p.add_argument("--run", help="name this run so its spending accumulates in the ledger")
+    p.add_argument(
+        "--budget", type=float,
+        help="cumulative credit cap for --run; refuses once the run's total would exceed it",
+    )
     p.add_argument("--poll-interval", type=float, default=5.0)
     p.add_argument("--poll-timeout", type=float, default=240.0)
     p.set_defaults(func=cmd_submit)
+
+    p = sub.add_parser("spent", help="what the ledger says has been spent (free, offline)")
+    p.add_argument("--run", help="limit to one run name")
+    p.add_argument("--json", action="store_true")
+    p.set_defaults(func=cmd_spent)
 
     p = sub.add_parser(
         "poll", help="resume an already-paid-for run: finish polling and download its media (free)"
@@ -332,6 +363,9 @@ def main(argv=None) -> int:
         return 2
     except urllib.error.URLError as exc:
         print(f"network error reaching Blotato: {exc.reason}", file=sys.stderr)
+        return 1
+    except BudgetExceeded as exc:
+        print(f"budget: {exc}", file=sys.stderr)
         return 1
     except (api.BlotatoHttpError, DownloadTooLarge, ValueError, OSError) as exc:
         print(f"error: {exc}", file=sys.stderr)

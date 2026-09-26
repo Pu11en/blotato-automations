@@ -63,6 +63,7 @@ If a job is still rendering when the poll timeout expires, the credits are alrea
 | `blotato approve` | free | Records a human's credit ceiling and approval reference |
 | `blotato submit` | **spends credits** | One bounded call, polled to completion, downloaded |
 | `blotato poll <run-dir>` | free | Resumes an already-paid-for run: finishes polling, downloads its media |
+| `blotato spent` | free, offline | What the ledger says every paid call actually cost |
 | `blotato pinterest …` | free | Local Pinterest research workflow (no publishing, no paid calls) |
 
 `blotato list` shows every technique this account can reach, including any contributed by other installed packages. `~0 cr*` means the cost depends on how you use it — `blotato show <id>` explains.
@@ -85,6 +86,24 @@ It exits non-zero rather than spending credits when:
 - the current balance is below the ceiling
 - a local asset's checksum drifted between `plan` and `submit`
 - the request body contains a publishing, scheduling, social-account, or third-party-credential field
+
+### Bounding the total, not just each call
+
+`max_credits_ceiling` bounds **one** call. A script looping over `submit` with a 50-credit ceiling could still drain the balance, 50 at a time, with every individual call looking correct. Name the run and give it a budget:
+
+```bash
+blotato submit plan.json --run thumbnails-oct --budget 300
+```
+
+Every paid call is appended to `outputs/credits.log` — including failed and timed-out ones, since the credits are gone either way — and `submit` refuses once the run's total would exceed its budget. A call whose cost could not be measured counts as its full ceiling rather than zero; guessing low is how a budget gets blown.
+
+```
+$ blotato spent --run thumbnails-oct
+2026-09-26T12:17:20Z  thumbnails-oct    50  infographic-whiteboard
+2026-09-26T12:19:04Z  thumbnails-oct    50  infographic-newspaper
+
+2 paid call(s), 100 credits for run 'thumbnails-oct'.
+```
 
 `max_credits_ceiling` and the approval block are deliberately *outside* the digest — `blotato approve` writes them, and must not invalidate the plan it is approving.
 
@@ -141,7 +160,7 @@ src/blotato/          the installable package — this is the tool
   workflows/pinterest/  local Pinterest research workflow
 skills/                 Claude Code skills wrapping the CLI
 docs/                   how to operate what is implemented
-tests/                  122 tests, no network, no credits
+tests/                  163 tests, no network, no credits
 lab/                    research notes, archived experiments — ships nothing
 ```
 

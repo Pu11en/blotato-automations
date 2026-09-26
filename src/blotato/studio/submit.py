@@ -21,6 +21,7 @@ from ..catalog import get_model
 from ..catalog.types import GenerationPlane, MediaItem
 from ..digest import verify_plan_digest
 from ..download import download, extension_for
+from ..ledger import BudgetExceeded, check_budget, record
 from ..workspace import describe_path, load_env, outputs_dir, resolve_asset
 
 TERMINAL_STATUSES = {"done", "creation-from-template-failed", "insufficient-credits"}
@@ -122,6 +123,8 @@ def _finish(
     poll_log: list,
     credits_before,
     workspace: Path = None,
+    run: str = None,
+    ceiling: float = None,
 ) -> dict:
     _write(run_dir, "poll-log.sanitized.json", poll_log, api_key)
     try:
@@ -155,6 +158,23 @@ def _finish(
     if timed_out:
         result["recover_with"] = f"blotato poll {describe_path(run_dir, root=workspace)}"
     _write(run_dir, "result.json", result)
+    if credits_before is not None:
+        # Recorded even on failure or timeout: the credits are gone either way,
+        # and a run's budget has to account for them.
+        record(
+            {
+                "run": run,
+                "model_id": model_id,
+                "job_id": job_id,
+                "run_dir": result["run_dir"],
+                "final_status": result["final_status"],
+                "credits_before": credits_before,
+                "credits_after": remaining,
+                "credits_observed_delta": result["credits_observed_delta"],
+                "assumed_credits": ceiling,
+            },
+            workspace=workspace,
+        )
     return result
 
 
@@ -162,6 +182,8 @@ def submit(
     plan_path: Path,
     *,
     workspace: Path = None,
+    run: str = None,
+    budget: float = None,
     poll_interval: float = 5,
     poll_timeout: float = 240,
 ) -> dict:
@@ -198,6 +220,12 @@ def submit(
 
     env = load_env(root=workspace)
     api_key = br.load_api_key(env=env)
+
+    # A per-call ceiling bounds one call; a run budget bounds their sum.
+    try:
+        check_budget(run=run, budget=budget, ceiling=ceiling, workspace=workspace)
+    except (BudgetExceeded, ValueError) as exc:
+        raise SystemExit(f"refusing to submit: {exc}") from None
 
     credits_before = api.get_credits(api_key)["creditsRemaining"]
     if credits_before < ceiling:
@@ -248,6 +276,8 @@ def submit(
         poll_log=poll_log,
         credits_before=credits_before,
         workspace=workspace,
+        run=run,
+        ceiling=ceiling,
     )
 
 

@@ -70,6 +70,19 @@ except SystemExit as refusal:
     log.warning("blotato refused: %s", refusal)
 ```
 
+### Cap a whole batch, not just one call
+
+A per-call ceiling does not bound a loop. Name the run and give it a budget, and the ledger accumulates across calls:
+
+```python
+from blotato import credits_spent
+
+result = submit_plan_file(path, workspace=root, run="thumbnails-oct", budget=300)
+print(credits_spent(run="thumbnails-oct", workspace=root))
+```
+
+Once the run's total would exceed its budget, `submit_plan_file` refuses **before** contacting the API. Every paid call lands in `<workspace>/outputs/credits.log`, including failures and timeouts.
+
 If a run times out, the credits are gone but the job is not: `result["recover_with"]` names the command, and `poll_run(run_dir)` does the same from Python.
 
 ## Credentials and paths

@@ -39,6 +39,9 @@ from .catalog import (
 )
 from .digest import compute_approval_digest, verify_plan_digest
 from .download import download
+from .ledger import BudgetExceeded, ledger_path
+from .ledger import entries as ledger_entries
+from .ledger import spent as credits_spent
 from .runner import MissingCredentialError, hash_file, load_api_key, sanitize
 from .studio.plan import build_plan
 from .studio.submit import poll as poll_run
@@ -67,6 +70,9 @@ __all__ = [
     # plumbing a consumer may legitimately need
     "api",
     "download",
+    "credits_spent",
+    "ledger_entries",
+    "ledger_path",
     "hash_file",
     "sanitize",
     "load_api_key",
@@ -78,5 +84,6 @@ __all__ = [
     "UnknownModelError",
     "DuplicateModelError",
     "MissingCredentialError",
+    "BudgetExceeded",
     "__version__",
 ]
