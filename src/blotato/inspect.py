@@ -26,8 +26,13 @@ def run(output_root: Path = None, *, workspace: Path = None) -> Path:
     templates_raw = api.list_templates(api_key)
 
     retrieved_at = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    snapshot_dir = output_root / f"{retrieved_at}"
-    snapshot_dir.mkdir(parents=True, exist_ok=False)
+    # Two snapshots inside the same second used to crash on exist_ok=False.
+    snapshot_dir = output_root / retrieved_at
+    suffix = 1
+    while snapshot_dir.exists():
+        suffix += 1
+        snapshot_dir = output_root / f"{retrieved_at}-{suffix}"
+    snapshot_dir.mkdir(parents=True)
 
     (snapshot_dir / "credits.sanitized.json").write_text(
         br.dump_sanitized_json({"retrieved_at": retrieved_at, "response": credits_raw}, secret_values=[api_key])

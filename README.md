@@ -39,7 +39,9 @@ blotato approve plan.json --max-credits 25 --reference "me, 2026-09-26"
 blotato submit plan.json
 ```
 
-`submit` writes everything it did to `outputs/blotato-studio-runs/<digest>/` — the plan, the sanitized request, the poll log, the observed credit delta, and the downloaded media with its checksum.
+`submit` writes everything it did to `outputs/blotato-studio-runs/<digest>/` — the plan, the sanitized request, the poll log, the observed credit delta, and every downloaded asset with its checksum.
+
+If a job is still rendering when the poll timeout expires, the credits are already spent, so `submit` records the job id and tells you to run `blotato poll <run-dir>` to collect the result later. Re-running `submit` on a plan that was already paid for is refused rather than charged twice.
 
 ## Commands
 
@@ -52,6 +54,7 @@ blotato submit plan.json
 | `blotato plan` | free, offline | Validates inputs, checksums local assets, writes `plan.json` |
 | `blotato approve` | free | Records a human's credit ceiling and approval reference |
 | `blotato submit` | **spends credits** | One bounded call, polled to completion, downloaded |
+| `blotato poll <run-dir>` | free | Resumes an already-paid-for run: finishes polling, downloads its media |
 | `blotato pinterest …` | free | Local Pinterest research workflow (no publishing, no paid calls) |
 
 ## Where files come from and go
@@ -64,12 +67,16 @@ You do not have to work inside this checkout — that is the point of installing
 
 It exits non-zero rather than spending credits when:
 
+- **the plan no longer matches its `approval_digest`** — an approval is bound to the exact model, prompt, media and settings that were approved, so editing `plan.json` afterwards invalidates it
+- **this plan was already submitted** — the run directory is keyed by the digest, so a repeat `submit` is refused and points you at `blotato poll`
 - the catalog marks the technique `broken`
 - there is no positive `max_credits_ceiling`
 - there is no recorded approval reference and timestamp
 - the current balance is below the ceiling
 - a local asset's checksum drifted between `plan` and `submit`
 - the request body contains a publishing, scheduling, social-account, or third-party-credential field
+
+`max_credits_ceiling` and the approval block are deliberately *outside* the digest — `blotato approve` writes them, and must not invalidate the plan it is approving.
 
 `BLOTATO_API_KEY` is read from the environment only, never accepted as an argument, and redacted from everything written to disk.
 
@@ -106,7 +113,7 @@ src/blotato/          the installable package — this is the tool
   schemas/              JSON schemas shipped as package data
 skills/blotato-studio/  Claude Code skill wrapping the CLI
 docs/                   how to operate what is implemented
-tests/                  87 tests, no network, no credits
+tests/                  104 tests, no network, no credits
 lab/                    research notes and past experiments — not shipped
 openspec/               change proposals (historical record)
 ```
