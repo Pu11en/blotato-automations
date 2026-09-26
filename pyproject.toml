@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "blotato-automations"
+version = "0.1.0"
+description = "Catalog-driven image and video generation through the Blotato API, with credit guardrails and a mandatory human approval step."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "jsonschema>=4.22",
+    "certifi>=2024.2.2",
+]
+
+[project.optional-dependencies]
+# Only the local (zero-credit) Pinterest video renderer needs these.
+render = ["Pillow>=10.0"]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+blotato = "blotato.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+blotato = ["schemas/*.json", "workflows/pinterest/data/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

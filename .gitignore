@@ -6,7 +6,12 @@ node_modules/
 *.log
 outputs/
 
-
 __pycache__/
 *.pyc
 .venv/
+
+# packaging artifacts
+build/
+dist/
+*.egg-info/
+.pytest_cache/
