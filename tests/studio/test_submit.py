@@ -111,13 +111,15 @@ class SubmitHappyPathTest(unittest.TestCase):
                 self.assertIn("sceneDescription", inputs)
                 return {"item": {"id": "job-123", "status": "done", "imageUrls": ["https://cdn.example.com/out.jpg"]}}
 
-            def fake_urlretrieve(url, path):
+            def fake_download(url, path, **kwargs):
+                Path(path).parent.mkdir(parents=True, exist_ok=True)
                 Path(path).write_bytes(b"fake image bytes")
+                return len(b"fake image bytes")
 
             with mock.patch.object(submit_mod.br, "load_api_key", return_value="sk-fake"), \
                  mock.patch.object(submit_mod.api, "get_credits", side_effect=fake_get_credits), \
                  mock.patch.object(submit_mod.api, "create_video_from_template", side_effect=fake_create_video_from_template), \
-                 mock.patch.object(submit_mod.urllib.request, "urlretrieve", side_effect=fake_urlretrieve):
+                 mock.patch.object(submit_mod, "download", side_effect=fake_download):
                 result = submit_mod.submit(plan_path, workspace=Path(tmp))
 
             self.assertEqual(result["final_status"], "done")

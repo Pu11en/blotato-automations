@@ -68,11 +68,6 @@ def list_templates(api_key: str) -> dict:
     )
 
 
-def upload_media(api_key: str, public_url: str) -> dict:
-    """POST /v2/media -> returns a hosted media URL usable in template inputs."""
-    return _request("POST", "/v2/media", api_key=api_key, body={"url": public_url})
-
-
 def create_presigned_upload(api_key: str, filename: str) -> dict:
     return _request(
         "POST", "/v2/media/uploads", api_key=api_key, body={"filename": filename}
@@ -109,6 +104,3 @@ def create_video_from_template(
 def get_video_creation(api_key: str, video_id: str) -> dict:
     return _request("GET", f"/v2/videos/creations/{video_id}", api_key=api_key)
 
-
-def delete_video(api_key: str, video_id: str) -> dict:
-    return _request("DELETE", f"/v2/videos/{video_id}", api_key=api_key)

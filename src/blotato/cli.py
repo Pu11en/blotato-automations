@@ -8,13 +8,16 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import urllib.error
 from datetime import datetime, timezone
 from pathlib import Path
 
 from . import api, inspect as inspect_mod, runner as br
 from .catalog import UnknownModelError, get_model, list_models
+from .digest import verify_plan_digest
+from .download import DownloadTooLarge
 from .studio.plan import build_plan
-from .studio.submit import submit
+from .studio.submit import poll, submit
 from .workspace import load_env
 
 
@@ -42,7 +45,15 @@ def _coerce_setting(model, name: str, raw: str):
             raise SystemExit(f"setting '{name}' is a boolean; got {raw!r}")
         return raw.lower() == "true"
     if spec.kind == "range":
-        return float(raw) if "." in raw else int(raw)
+        try:
+            value = float(raw) if "." in raw else int(raw)
+        except ValueError:
+            raise SystemExit(f"setting '{name}' must be a number; got {raw!r}") from None
+        if spec.min is not None and value < spec.min:
+            raise SystemExit(f"setting '{name}' must be >= {spec.min}; got {value}")
+        if spec.max is not None and value > spec.max:
+            raise SystemExit(f"setting '{name}' must be <= {spec.max}; got {value}")
+        return value
     if spec.kind == "enum" and spec.values and raw not in spec.values:
         raise SystemExit(f"setting '{name}' must be one of {list(spec.values)}; got {raw!r}")
     return raw
@@ -163,6 +174,7 @@ def cmd_plan(args) -> int:
 def cmd_approve(args) -> int:
     plan_path = Path(args.plan)
     plan = json.loads(plan_path.read_text())
+    verify_plan_digest(plan)
     if args.max_credits <= 0:
         raise SystemExit("--max-credits must be positive")
     if plan.get("broken"):
@@ -181,6 +193,17 @@ def cmd_approve(args) -> int:
 def cmd_submit(args) -> int:
     result = submit(
         Path(args.plan),
+        workspace=args.workspace,
+        poll_interval=args.poll_interval,
+        poll_timeout=args.poll_timeout,
+    )
+    print(json.dumps(result, indent=2))
+    return 0 if result.get("final_status") == "done" else 1
+
+
+def cmd_poll(args) -> int:
+    result = poll(
+        Path(args.run_dir),
         workspace=args.workspace,
         poll_interval=args.poll_interval,
         poll_timeout=args.poll_timeout,
@@ -256,6 +279,14 @@ def build_parser() -> argparse.ArgumentParser:
     p.set_defaults(func=cmd_submit)
 
     p = sub.add_parser(
+        "poll", help="resume an already-paid-for run: finish polling and download its media (free)"
+    )
+    p.add_argument("run_dir", help="a directory under outputs/blotato-studio-runs/")
+    p.add_argument("--poll-interval", type=float, default=5.0)
+    p.add_argument("--poll-timeout", type=float, default=240.0)
+    p.set_defaults(func=cmd_poll)
+
+    p = sub.add_parser(
         "pinterest", help="local Pinterest research workflow (no publishing, no paid calls)"
     )
     p.add_argument("pinterest_args", nargs=argparse.REMAINDER)
@@ -283,6 +314,9 @@ def main(argv=None) -> int:
     except KeyError as exc:
         print(f"plan is missing the field {exc}; rebuild it with `blotato plan`", file=sys.stderr)
         return 2
-    except (api.BlotatoHttpError, ValueError) as exc:
+    except urllib.error.URLError as exc:
+        print(f"network error reaching Blotato: {exc.reason}", file=sys.stderr)
+        return 1
+    except (api.BlotatoHttpError, DownloadTooLarge, ValueError, OSError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1

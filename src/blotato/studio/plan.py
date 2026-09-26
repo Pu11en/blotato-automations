@@ -10,7 +10,6 @@ simpler, honest state instead: PLANNED -> RUNNING -> READY/FAILED/TIMED_OUT.
 """
 from __future__ import annotations
 
-import hashlib
 import json
 import sys
 from datetime import datetime, timezone
@@ -18,7 +17,44 @@ from pathlib import Path
 
 from .. import runner as br
 from ..catalog import get_model
+from ..digest import compute_approval_digest
 from ..workspace import resolve_asset
+
+
+def _validate_settings(model, settings: dict) -> None:
+    """Enforce the bounds each catalog entry declares on its own settings.
+
+    `SettingField` has carried min/max and min_length/max_length since it was
+    written, and nothing read them.
+    """
+    for name, value in settings.items():
+        spec = model.settings.get(name)
+        if spec is None:
+            raise ValueError(
+                f"model {model.id} has no setting '{name}'; known: {sorted(model.settings)}"
+            )
+        if spec.kind == "enum" and spec.values and value not in spec.values:
+            raise ValueError(f"setting '{name}' must be one of {list(spec.values)}; got {value!r}")
+        if spec.kind == "range":
+            if not isinstance(value, (int, float)) or isinstance(value, bool):
+                raise ValueError(f"setting '{name}' must be a number; got {value!r}")
+            if spec.min is not None and value < spec.min:
+                raise ValueError(f"setting '{name}' must be >= {spec.min}; got {value!r}")
+            if spec.max is not None and value > spec.max:
+                raise ValueError(f"setting '{name}' must be <= {spec.max}; got {value!r}")
+        if spec.kind == "boolean" and not isinstance(value, bool):
+            raise ValueError(f"setting '{name}' must be a boolean; got {value!r}")
+        if spec.kind == "text":
+            if not isinstance(value, str):
+                raise ValueError(f"setting '{name}' must be a string; got {value!r}")
+            if spec.min_length is not None and len(value) < spec.min_length:
+                raise ValueError(
+                    f"setting '{name}' must be at least {spec.min_length} characters"
+                )
+            if spec.max_length is not None and len(value) > spec.max_length:
+                raise ValueError(
+                    f"setting '{name}' must be at most {spec.max_length} characters"
+                )
 
 
 def build_plan(
@@ -32,6 +68,10 @@ def build_plan(
     model = get_model(model_id)
     settings = dict(settings or {})
     media = media or {}
+
+    if not prompt or not prompt.strip():
+        raise ValueError("prompt must not be empty")
+    _validate_settings(model, settings)
 
     for role, (lo, hi) in model.roles.items():
         count = len(media.get(role, []))
@@ -88,15 +128,9 @@ def build_plan(
         "approval": {"reference": None, "decided_at": None},
         "created_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
     }
-    digest_material = {
-        "model_id": model.id,
-        "prompt": prompt,
-        "media": resolved_media,
-        "settings": settings,
-    }
-    plan["approval_digest"] = "sha256:" + hashlib.sha256(
-        json.dumps(digest_material, sort_keys=True).encode()
-    ).hexdigest()
+    plan["approval_digest"] = compute_approval_digest(
+        model_id=model.id, prompt=prompt, media=resolved_media, settings=settings
+    )
 
     if model.broken:
         print(

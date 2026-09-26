@@ -35,7 +35,11 @@ Every entry states honestly whether it is `verified <date>` (we ran it live and 
    blotato approve plan.json --max-credits <N> --reference "<who approved, where recorded>"
    ```
 
-3. **`blotato submit`** — spends credits. Refuses to run if the model is `broken`, there is no positive ceiling, there is no recorded approval, the balance is below the ceiling, a local asset's checksum drifted since planning, or the request would touch a publishing/external-credential field. On success it downloads whatever the job produced — an image, a set of images, or a video — and records the observed credit delta under `outputs/blotato-studio-runs/<digest>/`.
+3. **`blotato submit`** — spends credits. Refuses to run if the plan no longer matches its `approval_digest` (i.e. it was edited after approval), if this plan was already submitted, if the model is `broken`, if there is no positive ceiling or recorded approval, if the balance is below the ceiling, if a local asset's checksum drifted since planning, or if the request would touch a publishing/external-credential field. On success it downloads everything the job produced — an image, a set of images, or a video — and records the observed credit delta under `outputs/blotato-studio-runs/<digest>/`.
+
+   **Never edit a plan.json to "fix" it after approving.** The digest check will refuse it, and that is the point. Re-run `plan`, then `approve` again.
+
+4. **`blotato poll <run-dir>`** — free. If `submit` timed out while the job was still rendering, the credits are gone but the result is not: this resumes that job and downloads its media. `submit` prints the exact command in its `recover_with` field. Never re-run `submit` to "try again" — it refuses, because that would pay twice.
 
 `blotato balance` (free) before step 3 is worth it if the user is near their limit.
 

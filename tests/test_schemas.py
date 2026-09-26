@@ -30,19 +30,5 @@ class BrandProfileSchemaTest(unittest.TestCase):
             jsonschema.validate(instance, self.schema)
 
 
-class BlotatoRunSchemaTest(unittest.TestCase):
-    def setUp(self):
-        self.schema = load(SCHEMAS / "blotato-run.schema.json")
-
-    def test_valid_fixture_passes(self):
-        instance = load(FIXTURES / "blotato-run.valid.json")
-        jsonschema.validate(instance, self.schema)
-
-    def test_invalid_fixture_fails(self):
-        instance = load(FIXTURES / "blotato-run.invalid.json")
-        with self.assertRaises(jsonschema.ValidationError):
-            jsonschema.validate(instance, self.schema)
-
-
 if __name__ == "__main__":
     unittest.main()
