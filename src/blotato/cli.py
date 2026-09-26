@@ -31,6 +31,10 @@ def _status(model) -> str:
     return f"verified {model.verified_at}" if model.verified_at else "unverified"
 
 
+def _cost(model) -> str:
+    return f"~{model.observed_credits:g} cr" if model.observed_credits else "cost unknown"
+
+
 def _media_item(value: str) -> dict:
     return {"url": value} if value.startswith(("http://", "https://")) else {"path": value}
 
@@ -74,6 +78,7 @@ def cmd_list(args) -> int:
                 "status": _status(m),
                 "broken": m.broken,
                 "verified_at": m.verified_at,
+                "observed_credits": m.observed_credits,
                 "roles": {role: list(counts) for role, counts in m.roles.items()},
                 "settings": sorted(m.settings),
                 "known_issues": list(m.known_issues),
@@ -87,7 +92,7 @@ def cmd_list(args) -> int:
         return 0
     width = max(len(m.id) for m in models)
     for m in models:
-        print(f"{m.id:<{width}}  {m.surface:<5}  {_status(m):<18}  {m.label}")
+        print(f"{m.id:<{width}}  {m.surface:<5}  {_status(m):<18}  {_cost(m):<13}  {m.label}")
     print(f"\n{len(models)} technique(s). `blotato show <id>` for inputs and known issues.")
     return 0
 
@@ -98,6 +103,10 @@ def cmd_show(args) -> int:
     print(f"  {model.label}")
     print(f"\n{model.description}\n")
     print(f"blotato template id: {model.blotato_template_id}")
+    if model.observed_credits:
+        print(f"observed cost: {model.observed_credits:g} credits (measured, not a price list)")
+    if model.prompt_min_length or model.prompt_max_length:
+        print(f"prompt length: {model.prompt_min_length or 0}-{model.prompt_max_length or 'unbounded'} characters")
     print("media roles:")
     for role, (lo, hi) in model.roles.items():
         print(f"  {role}: {lo}-{hi} item(s)")
