@@ -13,6 +13,7 @@ The split exists so the repository's front page is the tool, not its history. If
 | `workflows/` | Reusable n8n/Make/API workflows that passed an experiment |
 | `inputs/` | Image-taste reference notes |
 | `archive/blotato-brand-content/` | The original brand-content skill — see below |
+| `archive/openspec/` | Two Cinco H Ranch change proposals and the six openspec agent skills. Both proposals describe work that has since been restructured or deleted, so they are a record, not a plan. |
 
 ## archive/blotato-brand-content/
 

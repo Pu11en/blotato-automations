@@ -28,7 +28,7 @@ package-dir = {"" = "src"}
 where = ["src"]
 
 [tool.setuptools.package-data]
-blotato = ["schemas/*.json", "workflows/pinterest/data/*.json"]
+blotato = ["workflows/pinterest/data/*.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

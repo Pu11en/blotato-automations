@@ -19,7 +19,7 @@ def run(out, fixtures):
                          'published_date':'2026-08-01','account_id':'fixture-pinterest','authorization_reference':'SYNTHETIC fixture registration, no actual publication'})
     rows=read(f/'results.json');results.import_results(out,rows)
     repeated=results.import_results(out,rows)
-    report=results.report(out)
+    results.report(out)
     evidence={'mode':'fixture','briefs':3,'variants_per_brief':2,'repeated_import':repeated['status'],
               'paid_calls':0,'publish_calls':0,'report':str(Path(out)/'results-7d.md')}
     atomic(Path(out)/'acceptance.json',evidence)

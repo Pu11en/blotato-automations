@@ -4,7 +4,7 @@ The local workflow collects evidence, ranks product-relevant opportunities, pack
 
 ## Start through the conversation
 
-Ask: “Use pinterest-research to research Cinco H Ranch and prepare three briefs.” The project-local skill at `.agents/skills/pinterest-research/SKILL.md` guides the agent. It is project-local, not globally installed. The agent writes creative assessments and scripts; the CLI validates and packages them without an extra model API.
+Ask: “Use pinterest-research to research <your brand> and prepare three briefs.” The project-local skill at `skills/pinterest-research/SKILL.md` guides the agent. It is project-local, not globally installed. The agent writes creative assessments and scripts; the CLI validates and packages them without an extra model API.
 
 The workflow ships inside the installed `blotato` package, so `blotato pinterest <subcommand>` works from any directory. Outputs land under the workspace's `outputs/` (see `--workspace` and `BLOTATO_WORKSPACE`).
 

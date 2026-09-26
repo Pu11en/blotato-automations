@@ -7,7 +7,6 @@ template catalog, sanitizes both, and writes them under
 from __future__ import annotations
 
 import json
-import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
