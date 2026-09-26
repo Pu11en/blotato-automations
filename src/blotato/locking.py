@@ -8,7 +8,6 @@ semantics and adds an explicit timeout instead of waiting forever.
 from __future__ import annotations
 
 import contextlib
-import os
 import time
 from pathlib import Path
 

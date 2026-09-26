@@ -22,11 +22,14 @@ class CatalogTest(unittest.TestCase):
         self.assertFalse(model.broken)
         self.assertEqual(model.verified_at, "2026-09-08")
 
-    def test_unverified_model_has_no_timestamp(self):
-        # An infographic style nobody has run yet.
-        model = get_model("infographic-steampunk")
-        self.assertIsNone(model.verified_at)
-        self.assertIsNone(model.observed_credits)
+    def test_nothing_in_the_catalog_is_unproven(self):
+        # Policy: an entry is either live-verified or explicitly marked broken.
+        # Anything we have not run does not get listed at all.
+        for model in list_models():
+            self.assertTrue(
+                model.verified_at or model.broken,
+                f"{model.id} has never been run live -- verify it or drop it",
+            )
 
     def test_live_verified_entries_record_what_a_run_cost(self):
         for model_id in ("ai-video-with-ai-voice", "infographic-newspaper"):
@@ -116,20 +119,13 @@ class InfographicFamilyTest(unittest.TestCase):
         plane = GenerationPlane(model_id="x", prompt="p" * 20, media={}, settings={})
         self.assertEqual(infographics.build_inputs(plane)["footerText"], infographics.DEFAULT_FOOTER)
 
-    def test_only_verified_styles_claim_a_cost(self):
+    def test_every_style_records_what_it_cost(self):
         for slug in infographics.STYLES:
             model = get_model(f"infographic-{slug}")
-            if slug in infographics.VERIFIED:
-                self.assertEqual(model.observed_credits, infographics.OBSERVED_CREDITS, slug)
-            else:
-                self.assertIsNone(model.observed_credits, slug)
+            self.assertEqual(model.observed_credits, infographics.OBSERVED_CREDITS, slug)
 
-    def test_unverified_styles_warn_and_verified_ones_do_not_repeat_the_warning(self):
-        for slug in infographics.STYLES:
-            issues = " ".join(get_model(f"infographic-{slug}").known_issues)
-            self.assertEqual(
-                infographics.SHARED_ISSUE in issues, slug not in infographics.VERIFIED, slug
-            )
+    def test_every_listed_style_has_been_run(self):
+        self.assertEqual(set(infographics.STYLES), set(infographics.VERIFIED))
 
     def test_verified_styles_are_a_subset_of_known_styles(self):
         self.assertLessEqual(set(infographics.VERIFIED), set(infographics.STYLES))

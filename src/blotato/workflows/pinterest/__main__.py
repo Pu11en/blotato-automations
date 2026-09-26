@@ -1,3 +1,3 @@
-"""Run from any directory: python /absolute/repo/scripts/pinterest/cli.py ..."""
+"""Run from any directory: python -m blotato.workflows.pinterest ..."""
 from .cli import main
 raise SystemExit(main())

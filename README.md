@@ -80,30 +80,43 @@ It exits non-zero rather than spending credits when:
 
 `BLOTATO_API_KEY` is read from the environment only, never accepted as an argument, and redacted from everything written to disk.
 
-## The catalog says what is actually proven
+## Everything in the catalog has actually been run
 
 ```
 $ blotato list
-ai-video-with-ai-voice       video  verified 2026-09-26  ~45 cr        AI Video with AI Voice
-infographic-newspaper        image  verified 2026-09-26  ~50 cr        Newspaper Infographic
-infographic-steampunk        image  unverified          cost unknown   Steampunk Infographic
-image-slideshow-text-overlays video BROKEN              cost unknown   Image Slideshow with Text Overlays
-...
+ai-video-with-ai-voice         video  verified 2026-09-26  ~45 cr         AI Video with AI Voice
+image-slideshow-text-overlays  video  BROKEN              cost unknown   Image Slideshow with Text Overlays
+infographic-breaking-news      image  verified 2026-09-26  ~50 cr         Breaking News
+infographic-newspaper          image  verified 2026-09-26  ~50 cr         Newspaper Infographic
+infographic-whiteboard         image  verified 2026-09-26  ~50 cr         Whiteboard Infographic
+product-scene-placement        image  verified 2026-09-08  cost unknown   Product Scene Placement
 ```
 
-23 techniques, of which 5 have been submitted live and inspected.
+**The rule: an entry is either live-verified or explicitly marked BROKEN.** A technique nobody has run does not get listed — Blotato exposes 37 templates, and the ones here are the ones somebody submitted and looked at. A test enforces this, so the catalog cannot quietly fill up with guesses.
 
-- **verified `<date>`** — we ran it and looked at the output. `observed cost` is what that run actually charged, measured from the balance before and after, not a published price list.
-- **unverified** — the schema came from Blotato's live template listing, so a plan will be structurally valid, but nobody has looked at what it renders.
-- **BROKEN** — we ran it and it does not work as documented. `submit` refuses it.
+- **verified `<date>`** — we ran it and inspected the output. `observed cost` is what that run actually charged, measured from the balance before and after, not a published price list.
+- **BROKEN** — we ran it and it does not work as documented. `submit` refuses it. The entry stays so nobody rediscovers the same failure at credit cost.
 
-`blotato show <id>` prints what a live run actually revealed. Those notes are observations, not guesses — for example the Breaking News style invents a broadcaster and a photorealistic anchor, and rendered a QR code that encodes nothing.
+`blotato show <id>` prints what a live run actually revealed. Those notes are observations, not guesses:
 
-**Twenty of the entries are one family**: Blotato ships 20 infographic styles that share an identical contract (a 10–500 char description, a 2–100 char footer CTA, no reference media, one image out). They live in a single `catalog/templates/infographics.py`, because the registry accepts an `ENTRIES` tuple as well as a single `ENTRY`.
+```
+$ blotato show infographic-breaking-news
+known issues (observed live, not guessed):
+  - Invents a broadcaster and a photorealistic news anchor who does not exist,
+    and the 2026-09-26 run rendered a QR code captioned 'Free thumbnail
+    cheatsheet' that encodes nothing real.
+```
+
+Related templates share a file: the infographic styles all take the same two text inputs and no media, so they live in one `catalog/templates/infographics.py` — the registry accepts an `ENTRIES` tuple as well as a single `ENTRY`.
 
 ### Adding a technique
 
-One small file in `src/blotato/catalog/templates/`, modelled on `product_scene_placement.py`. It declares the real Blotato template id (get it from `blotato inspect`), which media roles it needs, and a `build_inputs()` that maps the generic plan onto that template's input shape. Leave `verified_at = None` until you have actually submitted it and looked at the output. Record what you observed in `known_issues` — `image_slideshow_text_overlays.py` shows how a live-discovered bug gets encoded so nobody burns credits rediscovering it.
+1. `blotato inspect` — free; dumps the live template listing with every template's real id and input schema.
+2. Add one small file to `src/blotato/catalog/templates/`, modelled on `product_scene_placement.py`: the template id, the media roles it needs, and a `build_inputs()` mapping the generic plan onto that template's input shape. Copy the bounds from the listing rather than guessing them, so bad input fails for free.
+3. **Run it once and look at the output.** Only then set `verified_at` and `observed_credits`.
+4. Record what you saw in `known_issues` — `image_slideshow_text_overlays.py` shows how a live-discovered bug gets encoded so nobody burns credits rediscovering it.
+
+Until step 3 happens, the entry does not belong in the catalog.
 
 The architecture follows the open-source [`open-higgsfield`](https://github.com/wide-trace/open-higgsfield) project (MIT), with Blotato as the only backend.
 
@@ -116,12 +129,10 @@ src/blotato/          the installable package — this is the tool
   catalog/              one file per technique
   studio/               plan.py (free) and submit.py (spends credits)
   workflows/pinterest/  local Pinterest research workflow
-  schemas/              JSON schemas shipped as package data
-skills/blotato-studio/  Claude Code skill wrapping the CLI
+skills/                 Claude Code skills wrapping the CLI
 docs/                   how to operate what is implemented
-tests/                  124 tests, no network, no credits
-lab/                    research notes and past experiments — not shipped
-openspec/               change proposals (historical record)
+tests/                  122 tests, no network, no credits
+lab/                    research notes, archived experiments — ships nothing
 ```
 
 ## Development

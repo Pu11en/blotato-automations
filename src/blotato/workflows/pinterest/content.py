@@ -3,9 +3,10 @@ from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
-from urllib.request import Request, build_opener
+from urllib.request import Request
 from urllib.error import URLError, HTTPError
-from .core import Invalid, now, read, validate, digest, atomic, locked, load_run, identifier, https_url, resolve_asset
+from ...workspace import resolve_asset
+from .core import Invalid, now, read, validate, digest, atomic, locked, load_run, identifier, https_url
 from .adapters import https_opener
 
 CHECKS = ('product_identity','claims','typography','muted_clarity','audio_rights','media_metadata','pacing')

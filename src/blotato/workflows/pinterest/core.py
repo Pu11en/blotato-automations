@@ -12,7 +12,6 @@ from urllib.parse import urlparse
 from jsonschema import Draft202012Validator, FormatChecker
 
 from ...locking import exclusive_lock
-from ...workspace import resolve_asset
 
 DATA = Path(__file__).resolve().parent / 'data'
 SCHEMAS = DATA / 'contracts.json'

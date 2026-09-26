@@ -6,7 +6,7 @@ separate live calls (a 4-slide run and two single-slide diagnostics):
 job never produces `mediaUrl` -- only static per-slide `imageUrls`, even
 with a single slide. The real photo crop/resize itself works correctly.
 
-Working fallback: skills/blotato-brand-content/scripts/render_pinterest_video_local.py
+Working fallback: lab/archive/blotato-brand-content/scripts/render_pinterest_video_local.py
 does the same job locally (Pillow + ffmpeg) for zero credits. Retest this
 template periodically in case Blotato fixes it, then flip `broken=False`.
 """
@@ -48,7 +48,7 @@ ENTRY = ModelEntry(
     known_issues=(
         "BROKEN 2026-09-08: textOverlay renders as a blank box, no text drawn; job "
         "never produces mediaUrl, only static per-slide imageUrls, even for one slide. "
-        "Use render_pinterest_video_local.py (Pillow+ffmpeg) instead until this is fixed.",
+        "Render it locally instead (Pillow+ffmpeg) until this is fixed; see lab/archive/.",
     ),
     broken=True,
     verified_at="2026-09-08",

@@ -15,3 +15,6 @@ build/
 dist/
 *.egg-info/
 .pytest_cache/
+
+# discord file-delivery queue written by the agent harness
+.ccdb-attachments-*

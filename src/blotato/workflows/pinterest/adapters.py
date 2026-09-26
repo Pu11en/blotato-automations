@@ -12,7 +12,7 @@ from email.utils import parsedate_to_datetime
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import Request, build_opener, HTTPRedirectHandler, HTTPSHandler
-from .core import Invalid, now, digest, validate, https_url, pin_id, read, DATA
+from .core import Invalid, now, digest, validate, https_url, read, DATA
 
 class Unavailable(RuntimeError):
     pass
